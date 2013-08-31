@@ -1,0 +1,8 @@
+###
+# Mac OS X directory preferences
+###
+.DS_Store
+.localized
+
+# Builds
+#js/build
