@@ -35,7 +35,28 @@ define(function(require) {
     // Re-renders the titles of the todo item.
     render: function() {
       this.$el.addClass('list-group-item').html( this.template( this.model.toJSON() ) );
+      this.renderMapMarker();
       return this;
+    },
+
+    renderMapMarker: function(){
+      var positionGM = new google.maps.LatLng(this.model.get('lat'), this.model.get('lng'));
+      this.markerGM = new google.maps.Marker({
+          map: app.map,
+          position: positionGM
+      });
+      // Add infos
+      this.markerInfoGM = new google.maps.InfoWindow({
+          content: "Title = "+this.model.get('title')+"<b>" + "<br />" + "Latitude: " +this.model.get('lat') + "<br />" + "Longitude: " + this.model.get('lng')+"</b><br/><a href='javascript:map.removeOverlay(lastMarker);'>remove</a>"
+      });
+      // Edit new marker
+      var win = this.markerInfoGM;
+      var mark = this.markerGM;
+      google.maps.event.addListener(this.markerGM, "click", function() {
+        console.log('ADD EVENT');
+        console.log(mark);
+        win.open(app.map, mark);
+      });
     },
 
     // Determines if item should be hidden
