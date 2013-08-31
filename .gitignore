@@ -5,7 +5,7 @@
 .localized
 
 # Builds
-#js/build
+client/js/build
 
 # Server
 server/config/env.yml
