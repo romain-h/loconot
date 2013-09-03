@@ -79,7 +79,7 @@ define(function(require) {
               position: results[0].geometry.location
           });
           console.log(results[0]);
-          app.collections.loconots.add({'address': results[0].formatted_address});
+          app.collections.loconots.create({'address': results[0].formatted_address});
         } else {
           console.log("Geocode was not successful for the following reason: " + status);
         }
