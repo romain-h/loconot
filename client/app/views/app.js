@@ -6,6 +6,8 @@ define(function(require) {
   var LoconotViewSingle = require('views/loconot');
   require('templates');
 
+  // App Main View
+  // -------------
   return Backbone.View.extend({
 
     // Bind to the existing skeleton
@@ -13,7 +15,7 @@ define(function(require) {
 
     // Delegated events for creating new items, and clearing completed ones.
     events: {
-      'click #new-note': 'createOnEnter',
+      'keypress #addressSearch': 'searchAddressOnEnter',
       'click #clear-completed': 'clearCompleted',
       'click #toggle-all': 'toggleAllComplete'
     },
@@ -68,6 +70,28 @@ define(function(require) {
     addAll: function() {
       this.$('#v').html('');
       app.collections.todos.each(this.addOne, this);
+    },
+    addOneByAddress: function(results, status){
+        if (status == google.maps.GeocoderStatus.OK) {
+          app.gmap.map.setCenter(results[0].geometry.location);
+          var marker = new google.maps.Marker({
+              map: app.gmap.map,
+              position: results[0].geometry.location
+          });
+          console.log(results[0]);
+          app.collections.loconots.add({'address': results[0].formatted_address});
+        } else {
+          console.log("Geocode was not successful for the following reason: " + status);
+        }
+    },
+    searchAddressOnEnter: function( event ) {
+      if ( event.which !== app.keys.enter || !this.$('#addressSearch').val().trim() ) {
+        return;
+      }
+      console.log("Searching address ...");
+      app.gmap.search(this.$('#addressSearch').val().trim(), this.addOneByAddress);
+      // app.collections.todos.create( this.newAttributes() );
+      // this.$input.val('');
     }
 
     // filterOne : function (todo) {
