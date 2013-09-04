@@ -2528,6 +2528,34 @@ button.close {
 #map-canvas {
   height: 800px;
 }
+.mainAppView {
+  position: absolute;
+  top: 15px;
+  left: 25px;
+  width: 350px;
+  background: rgba(255, 255, 255, 0.8);
+}
+.mainAppView .mainContainer {
+  margin: 10px;
+}
+.mainAppView .mainContainer .btn-add-new {
+  float: right;
+  margin-bottom: 10px;
+}
+.mainAppView .mainContainer .loconotsList {
+  float: left;
+}
+.addNewBox {
+  display: none;
+  position: absolute;
+  top: 15px;
+  right: 25px;
+  width: 350px;
+  background: rgba(255, 255, 255, 0.8);
+}
+.addNewBox .mainContainer {
+  margin: 10px;
+}
 .clearfix:before,
 .clearfix:after {
   content: " ";

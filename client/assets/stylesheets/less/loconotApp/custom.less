@@ -1,11 +1,40 @@
-#map-canvas {
+#map-canvas{
     height: 800px;
 }
-
-.loconotsList{
-    li{
-        .close{
-            // float: right;
+.mainAppView{
+    position: absolute;
+    top: 15px;
+    left: 25px;
+    width: 350px;
+    background: rgba(255,255,255,0.8);
+    .mainContainer{
+        margin: 10px;
+        .btn-add-new{
+            float: right;
+            margin-bottom: 10px;
         }
+        .loconotsList{
+            float: left;
+            li{
+                .close{
+                    // float: right;
+                }
+            }
+        }
+
+    }
+
+}
+
+.addNewBox{
+    display: none;
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    width: 350px;
+    background: rgba(255,255,255,0.8);
+    .mainContainer{
+        margin: 10px;
     }
 }
+

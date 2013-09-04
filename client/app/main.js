@@ -56,10 +56,10 @@ define(function(require) {
         zoom: 13,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         // mapTypeControl: false,
-        // scaleControl: false,
-        // streetViewControl: false,
-        // panControl: false,
-        // zoomControl: false,
+        scaleControl: false,
+        streetViewControl: false,
+        panControl: false,
+        zoomControl: false,
         styles: styles
       };
       this.map = new google.maps.Map(document.getElementById('map-canvas'), this.mapOptions);

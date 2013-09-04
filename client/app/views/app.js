@@ -16,6 +16,7 @@ define(function(require) {
 
     // Delegated events for creating new items, and clearing completed ones.
     events: {
+      'click #addLoconotBtn': 'displayAddNewBox',
       'keypress #addressSearch': 'searchAddressOnEnter',
       'click #search-res a': 'secondSelectionByAddress',
       'click #clear-completed': 'clearCompleted',
@@ -26,9 +27,7 @@ define(function(require) {
     // collection, when items are added or changed. Kick things off by
     // loading any preexisting todos that might be saved in *localStorage*.
     initialize: function() {
-      this.$input = this.$('#new-todo');
-      this.$footer = this.$('#footer');
-      this.$main = this.$('#main');
+      this.$addBox = $('#addNew');
 
       this.listenTo(app.collections.loconots, 'add', this.addOne);
       this.listenTo(app.collections.loconots, 'remove', this.render);
@@ -36,35 +35,7 @@ define(function(require) {
       // Set map dom on load
       app.gmap = new app.GmapApi('map-canvas');
     },
-    // // Re-rendering the App just means refreshing the statistics -- the rest
-    // // of the app doesn't change.
-    // render: function() {
-    //   var completed = app.collections.loconots.completed().length;
-    //   var remaining = app.collections.loconots.remaining().length;
 
-    //   if ( app.collections.todos.length ) {
-    //     this.$main.show();
-    //     this.$footer.show();
-
-    //     this.$footer.html(this.statsTemplate({
-    //       completed: completed,
-    //       remaining: remaining
-    //     }));
-
-    //     this.$('#filters li a')
-    //       .removeClass('selected')
-    //       .filter('[href="#/' + ( app.TodoFilter || '' ) + '"]')
-    //       .addClass('selected');
-    //   } else {
-    //     this.$main.hide();
-    //     this.$footer.hide();
-    //   }
-
-    //   this.allCheckbox.checked = !remaining;
-    // },
-
-    // Add a single todo item to the list by creating a view for it, and
-    // appending its element to the `<ul>`.
     addOne: function( note ) {
       var view = new LoconotViewSingle({ model: note });
       $('#loconotsList').append( view.render().el );
@@ -74,6 +45,11 @@ define(function(require) {
     addAll: function() {
       this.$('#v').html('');
       app.collections.todos.each(this.addOne, this);
+    },
+    displayAddNewBox: function(){
+      console.log("ok");
+      console.log(this.$addBox);
+      this.$addBox.show();
     },
     addOneByAddress: function(results, status){
         if (status == google.maps.GeocoderStatus.OK) {
