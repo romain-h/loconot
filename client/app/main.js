@@ -29,21 +29,38 @@ define(function(require) {
 
 // Google Maps Object Definition
 // -----------------------------
-   var GmapApi = function(domId){
+   app.GmapApi = function(domId){
     this.initializeMaps(domId);
    };
 
-   GmapApi.prototype = {
-    constructor: GmapApi,
+   app.GmapApi.prototype = {
+    constructor: app.GmapApi,
     initializeMaps: function(domId) {
       var self = this;
       // Use new map style
-      google.maps.visualRefresh = true;
+      // google.maps.visualRefresh = true;
+      var styles = [
+        {
+          stylers: [
+            { lightness: 33 },
+            { saturation: -75 }
+          ],
+          elementType: "geometry"
+
+        }
+      ];
+
       // Init Map Object
       this.mapOptions = {
         center: new google.maps.LatLng(48.881115099999995, 2.3448237),
         zoom: 13,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        // mapTypeControl: false,
+        // scaleControl: false,
+        // streetViewControl: false,
+        // panControl: false,
+        // zoomControl: false,
+        styles: styles
       };
       this.map = new google.maps.Map(document.getElementById('map-canvas'), this.mapOptions);
 
@@ -77,9 +94,8 @@ define(function(require) {
   };
 
 
-  // Set map dom on load
-  app.gmap = new GmapApi('map-canvas');
-  google.maps.event.addDomListener(window, 'load', app.gmap.initializeMaps);
+
+  // google.maps.event.addDomListener(window, 'load', app.gmap.initializeMaps);
 
 
 

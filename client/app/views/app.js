@@ -33,8 +33,9 @@ define(function(require) {
       this.listenTo(app.collections.loconots, 'add', this.addOne);
       this.listenTo(app.collections.loconots, 'remove', this.render);
       app.collections.loconots.fetch();
+      // Set map dom on load
+      app.gmap = new app.GmapApi('map-canvas');
     },
-
     // // Re-rendering the App just means refreshing the statistics -- the rest
     // // of the app doesn't change.
     // render: function() {
@@ -85,6 +86,7 @@ define(function(require) {
           // If more than one res, manual choosing place:
           if(results.length > 1){
             this.$('#search-res').html(Handlebars.templates.resultsSearchAddress({res: results}));
+            this.$('#fg-addressSearch').addClass('has-success');
             app.tmp.resSearch = results;
             return;
           }
@@ -96,6 +98,7 @@ define(function(require) {
     },
     secondSelectionByAddress: function(ev){
       var selection = $(ev.target).data('nb');
+      $(ev.target).addClass('active');
       console.log('Selected: ' );
       console.log(app.tmp.resSearch[selection].geometry.location.lat());
       var selectedRes = app.tmp.resSearch[selection];
