@@ -17,3 +17,7 @@ Token Facebook contre une cle api:
 ## @TODO:
 
 - Use requirejs async plugin to load gmaps
+- Choose between addBox Bacbone View ou just std DOM elt? => Backbone View Definitly!
+- On right click on a place: display a new addBox and resolve address
+- Remove tmp and use View object to store results
+- Keep a simple Windows box on Marker on map @ la tooltip
