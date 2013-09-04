@@ -96,10 +96,20 @@ define(function(require) {
     },
     secondSelectionByAddress: function(ev){
       var selection = $(ev.target).data('nb');
-      console.log('Selected: '+ app.tmp.resSearch[selection]);
-      app.collections.loconots.create({'address': app.tmp.resSearch[selection].formatted_address});
+      console.log('Selected: ' );
+      console.log(app.tmp.resSearch[selection].geometry.location.lat());
+      var selectedRes = app.tmp.resSearch[selection];
+      var latlng = selectedRes.geometry.location;
+      var loconot = {
+          address: selectedRes.formatted_address,
+          lat: latlng.lat(),
+          lng: latlng.lng()
+      };
+      app.collections.loconots.create(loconot);
       // reset tmp search
       app.tmp.resSearch = null;
+      // Empty and hide view
+      this.$('#search-res').html('').hide();
     },
     searchAddressOnEnter: function( event ) {
       if ( event.which !== app.keys.enter || !this.$('#addressSearch').val().trim() ) {
