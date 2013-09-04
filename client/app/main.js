@@ -21,6 +21,7 @@ define(function(require) {
     // What is the enter key constant?
     app.keys = {enter: 13};
     console.log(app);
+    app.tmp = {};
 
     return app;
   };
@@ -36,6 +37,7 @@ define(function(require) {
     constructor: GmapApi,
     initializeMaps: function(domId) {
       var self = this;
+      // Use new map style
       google.maps.visualRefresh = true;
       // Init Map Object
       this.mapOptions = {
@@ -47,18 +49,6 @@ define(function(require) {
 
       // Init Geocoder object
       this.geocoder = new google.maps.Geocoder();
-      this.geocoder.geocode( { 'address': 'Paris'}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          self.map.setCenter(results[0].geometry.location);
-          var marker = new google.maps.Marker({
-              map: self.map,
-              position: results[0].geometry.location
-          });
-          console.log(marker);
-        } else {
-          alert("Geocode was not successful for the following reason: " + status);
-        }
-      });
 
       // Add new marker
       // google.maps.event.addListener(this.map, "rightclick", function(event) {
@@ -82,7 +72,6 @@ define(function(require) {
       // });
     },
     search: function(_address, callback){
-      var self = this;
       this.geocoder.geocode( { 'address': _address}, callback);
     }
   };

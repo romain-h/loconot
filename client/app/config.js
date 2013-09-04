@@ -10,7 +10,8 @@ require.config({
     backbone: '../vendor/js/backbone',
     handlebars: '../vendor/js/handlebars.runtime',
     backboneLocalstorage: '../vendor/js/backbone.localStorage',
-    templates: '../js/build/templates'
+    templates: '../js/build/templates',
+    bootstrapDropdown: '../vendor/js/bootstrap/dropdown'
   },
 
   shim: {
@@ -23,6 +24,9 @@ require.config({
     },
     templates: {
       deps: ['handlebars']
+    },
+    bootstrapDropdown: {
+      deps: ['jquery']
     }
   }
 });

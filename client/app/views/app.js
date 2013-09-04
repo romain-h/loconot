@@ -2,6 +2,7 @@ define(function(require) {
   var Backbone = require('backbone');
   var $ = require('jquery');
   var app = require('app');
+  require('bootstrapDropdown');
   var Handlebars = require('handlebars');
   var LoconotViewSingle = require('views/loconot');
   require('templates');
@@ -16,6 +17,7 @@ define(function(require) {
     // Delegated events for creating new items, and clearing completed ones.
     events: {
       'keypress #addressSearch': 'searchAddressOnEnter',
+      'click #search-res a': 'secondSelectionByAddress',
       'click #clear-completed': 'clearCompleted',
       'click #toggle-all': 'toggleAllComplete'
     },
@@ -29,6 +31,7 @@ define(function(require) {
       this.$main = this.$('#main');
 
       this.listenTo(app.collections.loconots, 'add', this.addOne);
+      this.listenTo(app.collections.loconots, 'remove', this.render);
       app.collections.loconots.fetch();
     },
 
@@ -79,10 +82,24 @@ define(function(require) {
               position: results[0].geometry.location
           });
           console.log(results[0]);
+          // If more than one res, manual choosing place:
+          if(results.length > 1){
+            this.$('#search-res').html(Handlebars.templates.resultsSearchAddress({res: results}));
+            app.tmp.resSearch = results;
+            return;
+          }
+
           app.collections.loconots.create({'address': results[0].formatted_address});
         } else {
           console.log("Geocode was not successful for the following reason: " + status);
         }
+    },
+    secondSelectionByAddress: function(ev){
+      var selection = $(ev.target).data('nb');
+      console.log('Selected: '+ app.tmp.resSearch[selection]);
+      app.collections.loconots.create({'address': app.tmp.resSearch[selection].formatted_address});
+      // reset tmp search
+      app.tmp.resSearch = null;
     },
     searchAddressOnEnter: function( event ) {
       if ( event.which !== app.keys.enter || !this.$('#addressSearch').val().trim() ) {

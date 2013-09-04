@@ -12,3 +12,8 @@ Setup a Facebook and Twitter oauth.
 - Titanium or phonegap portage.
 
 Token Facebook contre une cle api:
+
+
+## @TODO:
+
+- Use requirejs async plugin to load gmaps
