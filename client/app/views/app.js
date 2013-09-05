@@ -5,6 +5,7 @@ define(function(require) {
   require('bootstrapDropdown');
   var Handlebars = require('handlebars');
   var LoconotViewSingle = require('views/loconot');
+  var AddNewBoxView = require('views/AddNewBox');
   require('templates');
 
   // App Main View
@@ -17,8 +18,6 @@ define(function(require) {
     // Delegated events for creating new items, and clearing completed ones.
     events: {
       'click #addLoconotBtn': 'displayAddNewBox',
-      'keypress #addressSearch': 'searchAddressOnEnter',
-      'click #search-res a': 'secondSelectionByAddress',
       'click #clear-completed': 'clearCompleted',
       'click #toggle-all': 'toggleAllComplete'
     },
@@ -27,15 +26,17 @@ define(function(require) {
     // collection, when items are added or changed. Kick things off by
     // loading any preexisting todos that might be saved in *localStorage*.
     initialize: function() {
-      this.$addBox = $('#addNew');
-
       this.listenTo(app.collections.loconots, 'add', this.addOne);
       this.listenTo(app.collections.loconots, 'remove', this.render);
       app.collections.loconots.fetch();
       // Set map dom on load
       app.gmap = new app.GmapApi('map-canvas');
     },
-
+    displayAddNewBox: function(){
+      console.log("Display New AddBox");
+      var view = new AddNewBoxView();
+      console.log(view);
+    },
     addOne: function( note ) {
       var view = new LoconotViewSingle({ model: note });
       $('#loconotsList').append( view.render().el );
@@ -45,59 +46,6 @@ define(function(require) {
     addAll: function() {
       this.$('#v').html('');
       app.collections.todos.each(this.addOne, this);
-    },
-    displayAddNewBox: function(){
-      console.log("ok");
-      console.log(this.$addBox);
-      this.$addBox.show();
-    },
-    addOneByAddress: function(results, status){
-        if (status == google.maps.GeocoderStatus.OK) {
-          app.gmap.map.setCenter(results[0].geometry.location);
-          var marker = new google.maps.Marker({
-              map: app.gmap.map,
-              position: results[0].geometry.location
-          });
-          console.log(results[0]);
-          // If more than one res, manual choosing place:
-          if(results.length > 1){
-            this.$('#search-res').html(Handlebars.templates.resultsSearchAddress({res: results}));
-            this.$('#fg-addressSearch').addClass('has-success');
-            app.tmp.resSearch = results;
-            return;
-          }
-
-          app.collections.loconots.create({'address': results[0].formatted_address});
-        } else {
-          console.log("Geocode was not successful for the following reason: " + status);
-        }
-    },
-    secondSelectionByAddress: function(ev){
-      var selection = $(ev.target).data('nb');
-      $(ev.target).addClass('active');
-      console.log('Selected: ' );
-      console.log(app.tmp.resSearch[selection].geometry.location.lat());
-      var selectedRes = app.tmp.resSearch[selection];
-      var latlng = selectedRes.geometry.location;
-      var loconot = {
-          address: selectedRes.formatted_address,
-          lat: latlng.lat(),
-          lng: latlng.lng()
-      };
-      app.collections.loconots.create(loconot);
-      // reset tmp search
-      app.tmp.resSearch = null;
-      // Empty and hide view
-      this.$('#search-res').html('').hide();
-    },
-    searchAddressOnEnter: function( event ) {
-      if ( event.which !== app.keys.enter || !this.$('#addressSearch').val().trim() ) {
-        return;
-      }
-      console.log("Searching address ...");
-      app.gmap.search(this.$('#addressSearch').val().trim(), this.addOneByAddress);
-      // app.collections.todos.create( this.newAttributes() );
-      // this.$input.val('');
     }
 
     // filterOne : function (todo) {
