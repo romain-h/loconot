@@ -2594,6 +2594,7 @@ button.close {
   height: 800px;
 }
 .statusBox {
+  display: none;
   position: absolute;
   top: 0;
   left: 50%;
@@ -2627,6 +2628,13 @@ button.close {
   background: rgba(255, 255, 255, 0.8);
 }
 .addNewBox .mainContainer {
+  margin: 10px;
+}
+.addNewBox .mainContainer .otherFields {
+  display: none;
+}
+.addNewBox .mainContainer .otherFields .btn-validation {
+  float: right;
   margin: 10px;
 }
 .clearfix:before,

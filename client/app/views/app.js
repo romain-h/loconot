@@ -44,7 +44,7 @@ define(function(require) {
       **/
       this.$status.addClass(type);
       this.$status.find('.container').html(content);
-      this.$status.show();
+      this.$status.fadeIn().delay(1200).fadeOut();
     },
     displayAddNewBox: function(){
       console.log("Display New AddBox");
