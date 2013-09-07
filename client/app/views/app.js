@@ -52,6 +52,7 @@ define(function(require) {
       console.log("Display New AddBox");
       this.$addBtn.hide();
       this.addView = new AddNewBoxView({ model: new app.models.loconot() });
+      $('body').append(this.addView.render().el);
     },
     removeAddBox: function(){
       this.$addBtn.show();

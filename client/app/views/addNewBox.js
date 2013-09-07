@@ -8,7 +8,8 @@ define(function(require) {
   // AaddNewBox Main View
   // --------------------
   return Backbone.View.extend({
-    el: '#addNew',
+    id: 'addNew',
+    className: 'addNewBox',
 
     // Define current model template
     template: Handlebars.templates.addNewBox,
@@ -95,7 +96,7 @@ define(function(require) {
       // Get the # selected
       var selection = $(ev.target).data('nb');
       // Set current view address with selection
-      setCurrentViewAddress(this.resList[selection]);
+      this.setCurrentViewAddress(this.resList[selection]);
     }
 
   });
