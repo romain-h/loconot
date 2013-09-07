@@ -54,7 +54,6 @@ define(function(require) {
       this.$otherFields.show();
     },
     searchAddress: function( event ) {
-      console.log('touch');
       if ( event.which !== app.keys.enter || !this.$('#addressSearch').val().trim() ) {
         // DO BETTER EMPTY DETECTION...
         this.$('#fg-addressSearch').removeClass('has-success');
