@@ -28,14 +28,27 @@ define(function(require) {
     initialize: function() {
       this.listenTo(app.collections.loconots, 'add', this.addOne);
       this.listenTo(app.collections.loconots, 'remove', this.render);
+      this.listenTo(this, 'displayMainStatus', this.status);
       app.collections.loconots.fetch();
       // Set map dom on load
       app.gmap = new app.GmapApi('map-canvas');
+
+      this.$status = $('body #statusBox');
+    },
+    status: function(type, content){
+      /** --------
+      // alert-success">...</div>
+      <div class="alert alert-info">...</div>
+      <div class="alert alert-warning">...</div>
+      <div class="alert alert-danger
+      **/
+      this.$status.addClass(type);
+      this.$status.find('.container').html(content);
+      this.$status.show();
     },
     displayAddNewBox: function(){
       console.log("Display New AddBox");
-      var view = new AddNewBoxView();
-      console.log(view);
+      var view = new AddNewBoxView({ model: new app.models.loconot() });
     },
     addOne: function( note ) {
       var view = new LoconotViewSingle({ model: note });

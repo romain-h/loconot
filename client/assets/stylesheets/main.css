@@ -2313,6 +2313,71 @@ input[type="button"].btn-block {
 .glyphicon-collapse-top:before {
   content: "\e160";
 }
+.alert {
+  padding: 15px 35px 15px 15px;
+  margin-bottom: 20px;
+  color: #c09853;
+  background-color: #fcf8e3;
+  border: 1px solid #fbeed5;
+  border-radius: 4px;
+}
+.alert h4 {
+  margin-top: 0;
+  color: inherit;
+}
+.alert hr {
+  border-top-color: #f8e5be;
+}
+.alert .alert-link {
+  font-weight: bold;
+  color: #a47e3c;
+}
+.alert .close {
+  position: relative;
+  top: -2px;
+  right: -21px;
+  color: inherit;
+}
+.alert > p,
+.alert > ul {
+  margin-bottom: 0;
+}
+.alert > p + p {
+  margin-top: 5px;
+}
+.alert-success {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #468847;
+}
+.alert-success hr {
+  border-top-color: #c9e2b3;
+}
+.alert-success .alert-link {
+  color: #356635;
+}
+.alert-danger {
+  background-color: #f2dede;
+  border-color: #eed3d7;
+  color: #b94a48;
+}
+.alert-danger hr {
+  border-top-color: #e6c1c7;
+}
+.alert-danger .alert-link {
+  color: #953b39;
+}
+.alert-info {
+  background-color: #d9edf7;
+  border-color: #bce8f1;
+  color: #3a87ad;
+}
+.alert-info hr {
+  border-top-color: #a6e1ec;
+}
+.alert-info .alert-link {
+  color: #2d6987;
+}
 .list-group {
   margin-bottom: 20px;
   padding-left: 0;
@@ -2527,6 +2592,14 @@ button.close {
 }
 #map-canvas {
   height: 800px;
+}
+.statusBox {
+  position: absolute;
+  top: 0;
+  left: 50%;
+}
+.statusBox.alert {
+  border-style: 2px;
 }
 .mainAppView {
   position: absolute;

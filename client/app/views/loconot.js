@@ -42,7 +42,7 @@ define(function(require) {
     renderMapMarker: function(){
       var positionGM = new google.maps.LatLng(this.model.get('lat'), this.model.get('lng'));
       this.markerGM = new google.maps.Marker({
-          map: app.map,
+          map: app.gmap.map,
           position: positionGM
       });
       // Add infos
@@ -55,7 +55,7 @@ define(function(require) {
       google.maps.event.addListener(this.markerGM, "click", function() {
         console.log('ADD EVENT');
         console.log(mark);
-        win.open(app.map, mark);
+        win.open(app.gmap.map, mark);
       });
     },
 

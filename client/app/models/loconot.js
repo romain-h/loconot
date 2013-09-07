@@ -8,12 +8,12 @@ define(function(require) {
     // Default attributes ensure that each todo created has `title` and `completed` keys.
     defaults: {
       id: null,
-      title: '',
-      lat: '',
-      lng: '',
-      body: '',
-      address: '',
       rate: 0
+    },
+    validate: function(attrs, options) {
+      if (attrs.title === undefined) {
+        return "Title need to be set";
+      }
     }
 
   });
