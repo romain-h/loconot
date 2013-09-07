@@ -13,23 +13,24 @@
   </script>
 </head>
 <body>
-
-  <div class="row">
+  <div id="mainApp" class="row">
     <div id="map-canvas"></div>
     <div id="statusBox" class="statusBox alert">
       <div class="container"></div>
     </div>
-    <div id="mainApp" class="mainAppView">
+    <div class="mainAppView">
       <div class="mainContainer">
       <h1>Loconot</h1>
-        <button id="addLoconotBtn" type="button" class="btn btn-success btn-add-new">
-          <span class="glyphicon glyphicon-map-marker"></span> Add new </button>
         <ul id="loconotsList" class="list-group loconotsList"></ul>
       </div>
     </div>
+    <button id="addLoconotBtn" type="button" class="btn btn-success btn-add-new">
+      <span class="glyphicon glyphicon-map-marker"></span> Add new
+    </button>
   </div>
-  <!-- Add new Box -->
+    <!-- Add new Box -->
   <div id="addNew" class="addNewBox"></div>
+
 
 </body>
 </html>

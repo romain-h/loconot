@@ -2612,12 +2612,13 @@ button.close {
 .mainAppView .mainContainer {
   margin: 10px;
 }
-.mainAppView .mainContainer .btn-add-new {
-  float: right;
-  margin-bottom: 10px;
-}
 .mainAppView .mainContainer .loconotsList {
   float: left;
+}
+.btn-add-new {
+  position: absolute;
+  top: 40px;
+  right: 80px;
 }
 .addNewBox {
   display: none;

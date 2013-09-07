@@ -14,8 +14,6 @@ define(function(require) {
     template: Handlebars.templates.addNewBox,
 
     initialize: function(){
-      console.log(app.views.main);
-      app.views.main.trigger('displayMainStatus', 'alert-info', 'Add new');
       this.$el.show();
       this.listenTo(this.model, 'invalid', this.errorHandler);
       this.render();
@@ -30,6 +28,7 @@ define(function(require) {
     events: {
       'keypress #addressSearch': 'searchAddress',
       'click #search-res a': 'secondSelectionByAddress',
+      'click #validationBtn': 'updateModel'
     },
     errorHandler: function(){
       console.log('Error mon pote');
@@ -65,16 +64,20 @@ define(function(require) {
       // Callback findAddress with context on geocoder search
       app.gmap.search(this.$('#addressSearch').val().trim(), this.findAddress.bind(this));
     },
-    // addFromSearchResult: function(_result){
-    //   var latlng = _result.geometry.location;
-    //   var resAttrs = {
-    //       address: _result.formatted_address,
-    //       lat: latlng.lat(),
-    //       lng: latlng.lng()
-    //   };
-    //   this.model.set(resAttrs, {validate:true});
-    //   app.collections.loconots.add(this.model);
-    // },
+    updateModel: function(){
+      var latlng = this.currentAddress.geometry.location;
+      var resAttrs = {
+          address: this.currentAddress.formatted_address,
+          lat: latlng.lat(),
+          lng: latlng.lng(),
+          title: this.$otherFields.find('#newTitle').val().trim(),
+          body: this.$otherFields.find('#newNote').val().trim()
+      };
+      this.model.set(resAttrs, {validate:true});
+      app.collections.loconots.create(this.model);
+      app.views.main.trigger('displayMainStatus', 'alert-success', resAttrs.title + ' added as a new loconot.');
+      app.views.main.trigger('removeAddbox');
+    },
     findAddress: function(results, status){
         if (status == google.maps.GeocoderStatus.OK) {
           // If more than one res, manual choosing place:

@@ -19,7 +19,10 @@ define(function(require) {
     Backbone.history.start();
     app.views.main = new AppView();
     // What is the enter key constant?
-    app.keys = {enter: 13};
+    app.keys = {
+      enter: 13,
+      suppr: 27
+    };
     console.log(app);
     app.tmp = {};
 

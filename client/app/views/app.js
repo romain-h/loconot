@@ -29,11 +29,13 @@ define(function(require) {
       this.listenTo(app.collections.loconots, 'add', this.addOne);
       this.listenTo(app.collections.loconots, 'remove', this.render);
       this.listenTo(this, 'displayMainStatus', this.status);
+      this.listenTo(this, 'removeAddbox', this.removeAddBox);
       app.collections.loconots.fetch();
       // Set map dom on load
       app.gmap = new app.GmapApi('map-canvas');
 
-      this.$status = $('body #statusBox');
+      this.$addBtn = this.$('#addLoconotBtn');
+      this.$status = this.$('#statusBox');
     },
     status: function(type, content){
       /** --------
@@ -48,7 +50,12 @@ define(function(require) {
     },
     displayAddNewBox: function(){
       console.log("Display New AddBox");
-      var view = new AddNewBoxView({ model: new app.models.loconot() });
+      this.$addBtn.hide();
+      this.addView = new AddNewBoxView({ model: new app.models.loconot() });
+    },
+    removeAddBox: function(){
+      this.$addBtn.show();
+      this.addView.remove();
     },
     addOne: function( note ) {
       var view = new LoconotViewSingle({ model: note });
