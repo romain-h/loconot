@@ -10,6 +10,10 @@ define(function(require) {
   // initialization function
   var init = function() {
     console.log('Init app');
+    // Set window context
+    app.window = {};
+    app.window.height = $(window).height();
+    $('#map-canvas').css({height: app.window.height});
     // Init filters
     app.TodoFilter = '';
     app.collections.loconots = new LoconotsCol();
@@ -135,4 +139,8 @@ define(function(require) {
       test = init();
   });
 
+  $(window).resize(function(){
+    app.window.height = $(window).height();
+    $('#map-canvas').css({height: app.window.height});
+  });
 });

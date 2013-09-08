@@ -121,6 +121,8 @@ define(function(require) {
     // Remove the item, destroy the model and delete its view.
     clear: function() {
       console.log('Destroying model');
+      // Remove marker
+      this.markerGM.setMap(null);
       // Remove from server
       this.model.destroy();
       //  Remove current view
