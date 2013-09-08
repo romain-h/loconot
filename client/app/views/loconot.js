@@ -9,43 +9,45 @@ define(function(require) {
   // -----------------
   return Backbone.View.extend({
 
-    tagName: 'li',
+    tagName: 'a',
+    className: 'list-group-item',
 
     // Define current model template
     template: Handlebars.templates.item,
 
     // The DOM events specific to an item.
     events: {
-      'click #addLoconotBtn': 'addNew',
+      'click': 'moreInfo',
       'dblclick label': 'edit',
       'click #destroyNote': 'clear',
       'keypress .edit': 'updateOnEnter',
       'blur .edit': 'close'
     },
 
-    // The TodoView listens for changes to its model, re-rendering. Since there's
-    // a one-to-one correspondence between a **Todo** and a **TodoView** in this
-    // app, we set a direct reference on the model for convenience.
     initialize: function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.destroy);
       this.listenTo(this.model, 'visible', this.toggleVisible);
+      this.position = new google.maps.LatLng(this.model.get('lat'), this.model.get('lng'));
     },
 
     // Re-renders the titles of the todo item.
     render: function() {
-      this.$el.addClass('list-group-item').html( this.template( this.model.toJSON() ) );
+      this.$el.html( this.template( this.model.toJSON() ) );
       this.renderMapMarker();
+      this.$titlePreview = this.$('#titlePreview');
+      this.$moreInfo = this.$('#moreInfo');
       return this;
     },
 
     renderMapMarker: function(){
-      var positionGM = new google.maps.LatLng(this.model.get('lat'), this.model.get('lng'));
+      // var positionGM = new google.maps.LatLng(this.model.get('lat'), this.model.get('lng'));
       this.markerGM = new google.maps.Marker({
           map: app.gmap.map,
-          position: positionGM
+          position: this.position
       });
       // Add infos
+      // TODO: Use handlebars template for this
       this.markerInfoGM = new google.maps.InfoWindow({
           content: "Title = "+this.model.get('title')+"<b>" + "<br />" + "Latitude: " +this.model.get('lat') + "<br />" + "Longitude: " + this.model.get('lng')+"</b><br/><a href='javascript:map.removeOverlay(lastMarker);'>remove</a>"
       });
@@ -59,6 +61,17 @@ define(function(require) {
       });
     },
 
+    focuseMap: function(){
+      app.gmap.map.setCenter(this.position);
+    },
+
+    moreInfo: function(){
+      console.log(this);
+      this.$titlePreview.hide();
+      this.$moreInfo.show();
+      this.focuseMap();
+
+    },
     // Determines if item should be hidden
     toggleVisible : function () {
       this.$el.toggleClass( 'hidden',  this.isHidden());

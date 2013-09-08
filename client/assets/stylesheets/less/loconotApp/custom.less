@@ -19,12 +19,46 @@
     .mainContainer{
         margin: 10px;
         .loconotsList{
+            a{
+                color: @app-night-blue;
+            }
+            color: @app-night-blue;
             float: left;
-            li{
-                .close{
-                    // float: right;
+            min-width: 328px;
+            .titlePreview{
+                cursor: pointer;
+            }
+            .moreInfo{
+                display: none;
+                h4{
+                    margin-top: 0;
+                }
+                .content-address{
+                    float: right;
+                    font-size: 11px;
+                    font-style: italic;
+                    color: @gray-light;
+                }
+                .content-body{
+                    width: 280px;
+                    float: left;
+                }
+                .content-actions{
+                    cursor: pointer;
+                    font-size: 10px;
+                    float: left;
+                    text-align: right;
+                    width: 280px;
+
+                    .action-edit{
+                        text-decoration: line-through;
+                    }
+                    .action-delete{
+                        color: @app-flat-red;
+                    }
                 }
             }
+
         }
 
     }

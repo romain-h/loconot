@@ -42,16 +42,18 @@ define(function(require) {
       var self = this;
       // Use new map style
       // google.maps.visualRefresh = true;
-      var styles = [
-        {
-          stylers: [
-            { lightness: 33 },
-            { saturation: -75 }
-          ],
-          elementType: "geometry"
+      // var styles = [
+      //   {
+      //     stylers: [
+      //       { lightness: 33 },
+      //       { saturation: -75 }
+      //     ],
+      //     elementType: "geometry"
 
-        }
-      ];
+      //   }
+      // ];
+      //
+      var styles = [{"featureType": "landscape.man_made","elementType": "geometry","stylers": [{"color": "#e4e4e4"}]}, {"featureType": "poi.park","elementType": "geometry","stylers": [{"color": "#c5c5c5"}]}, {"featureType": "road","elementType": "geometry.fill","stylers": [{"color": "#ffffff"}]}, {"featureType": "road","elementType": "geometry.stroke","stylers": [{"color": "#c9c9c9"}]}, {"featureType": "road","elementType": "labels.text.stroke","stylers": [{"weight": 0.1}]}, {"featureType": "road","elementType": "labels.icon","stylers": [{"visibility": "off"}]}];
 
       // Init Map Object
       this.mapOptions = {

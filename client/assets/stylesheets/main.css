@@ -2613,7 +2613,44 @@ button.close {
   margin: 10px;
 }
 .mainAppView .mainContainer .loconotsList {
+  color: #34495e;
   float: left;
+  min-width: 328px;
+}
+.mainAppView .mainContainer .loconotsList a {
+  color: #34495e;
+}
+.mainAppView .mainContainer .loconotsList .titlePreview {
+  cursor: pointer;
+}
+.mainAppView .mainContainer .loconotsList .moreInfo {
+  display: none;
+}
+.mainAppView .mainContainer .loconotsList .moreInfo h4 {
+  margin-top: 0;
+}
+.mainAppView .mainContainer .loconotsList .moreInfo .content-address {
+  float: right;
+  font-size: 11px;
+  font-style: italic;
+  color: #999999;
+}
+.mainAppView .mainContainer .loconotsList .moreInfo .content-body {
+  width: 280px;
+  float: left;
+}
+.mainAppView .mainContainer .loconotsList .moreInfo .content-actions {
+  cursor: pointer;
+  font-size: 10px;
+  float: left;
+  text-align: right;
+  width: 280px;
+}
+.mainAppView .mainContainer .loconotsList .moreInfo .content-actions .action-edit {
+  text-decoration: line-through;
+}
+.mainAppView .mainContainer .loconotsList .moreInfo .content-actions .action-delete {
+  color: #e74c3c;
 }
 .btn-add-new {
   position: absolute;

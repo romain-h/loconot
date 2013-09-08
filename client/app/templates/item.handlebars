@@ -1,4 +1,13 @@
-  <div>{{ title }} <button id="destroyNote" type="button" class="close" aria-hidden="true">&times;</button></div>
-  <div class="content-body">{{ body }}</div>
+<div id="titlePreview" class="titlePreview">{{ title }}</div>
+<div id="moreInfo" class="moreInfo">
+    <h4>{{ title }}</h4>
+  <span class="content-rating">{{ rating }}</span>
   <div class="content-address">{{ address }}</div>
-  <div class="content-rating">{{ rating }}</div>
+  <div class="content-body">{{ body }}</div>
+  <div class="content-actions">
+      <a id="editNote" class="action-edit">edit</a>
+      <a id="destroyNote" class="action-delete">delete</a>
+  </div>
+  <div class="clearfix"></div>
+</div>
+
