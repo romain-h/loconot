@@ -8,18 +8,25 @@ require 'yaml'
 require 'twitter_oauth'
 require 'dalli'
 
+# Load path for models
+$:.unshift File.join(File.dirname(__FILE__),'models')
+require 'Loconot'
+require 'User'
+
 
 class LoconotApp < Sinatra::Base
     register Sinatra::Contrib
     register Sinatra::ConfigFile
-
-        use Rack::Cors do
-            allow do
-                origins 'localhost:9292', 'localhost:8000'
-                resource '*', :headers => :any, :methods => [:get, :post, :options, :put, :delete]
-            end
-        end
     config_file 'config/env.yml'
+    enable :sessions
+
+    # Handle CORS ..
+    use Rack::Cors do
+        allow do
+            origins 'localhost:9292', 'localhost:8000'
+            resource '*', :headers => :any, :methods => [:get, :post, :options, :put, :delete]
+        end
+    end
 
     configure do
         set :allow_origin, :any
@@ -35,35 +42,28 @@ class LoconotApp < Sinatra::Base
             # MongoMapper.database.authenticate(uri.user, uri.password)
         end
     end
-    ## Def Models
-    class Loconot
-        include MongoMapper::Document
 
-        key :title, String, :require => true
-        key :lng, Float, :require => true
-        key :lat, Float, :require => true
-        key :body, String
-        key :address, String
-        key :rate,  Integer
+    helpers do
+        # Useful method to check if the current request is signed by cookie
+        def tryAccessToken
+            if session['access_token'].nil?
+                haltCustom(401, 'Authentication is required to access this resource.')
+            end
+        end
 
-        attr_accessible :title, :lng, :lat, :body, :address, :rate
-    end
-
-    class User
-        include MongoMapper::Document
-
-        key :twitter_id, Integer
-        key :name, String
-        key :access_token, String, :require => true
-        key :access_token_secret, String, :require => true
+        # Custom halt methode to return std json content
+        def haltCustom(status_code, message)
+            content = {'status' => "error",
+            'status_code' => status_code,
+            'messagge' => message
+            }
+            halt status_code, content.to_json
+        end
     end
 
     before do
-        # Init oauth twitter client
-        @client = TwitterOAuth::Client.new(
-            :consumer_key => settings.twitter['consumer_key'],
-            :consumer_secret => settings.twitter['consumer_secret']
-        )
+        # This is an api only so we handle only json here
+        content_type 'application/json'
         # Init memcached client
         @memc = Dalli::Client.new('localhost:11211', { :namespace => 'loconot'})
     end
@@ -81,49 +81,63 @@ class LoconotApp < Sinatra::Base
         return "#{session} #{firstNote.to_json}"
     end
 
+    # GET All loconot ressources
     get '/api/loconots' do
+        tryAccessToken
+        puts  session.to_json
         notes = Loconot.all()
         return notes.to_json
     end
 
-    get '/api/loconots/:id.?:format?' do
+    # GET a loconot ressource by id
+    get '/api/loconots/:id' do
+        tryAccessToken
         note = Loconot.find_by_id(params[:id])
-        if params[:format] == 'xml'
-            content_type 'application/xml'
-            return note.to_xml
-        else
-            content_type 'application/json'
-            return note.to_json
-        end
+        haltCustom(404, 'The ressource has not been found') if note.nil?
+        return note.to_json
     end
 
+    # POST new loconot ressource
     post '/api/loconots' do
+        tryAccessToken
         data = JSON.parse(request.body.read)
         puts data
-        # try?
+        # TODO add a condition on data. try/catch MongoMapper::DocumentNotValid
         note = Loconot.create(data)
         note.save!
         return note.to_json
     end
 
+    # PUT Modify an existing loconot ressource
     put '/api/loconots/:id' do
         note = Loconot.find_by_id(params[:id])
+        # TODO add a condition on data?!!
         data = JSON.parse(request.body.read)
-
         status 200
     end
 
+    # DELETE an existing loconot ressource
     delete '/api/loconots/:id' do
-        Loconot.destroy(params[:id])
-
-        status 200
+        begin
+           Loconot.destroy(params[:id])
+        # Catch MongoMapper Exception on not found
+        rescue MongoMapper::DocumentNotFound
+            haltCustom(404, 'The ressource has not been found')
+        end
+        status 204
     end
 
-    # put '/api/loconots/:id' do
-    #     note = Loconot.find_by_id(params[:id])
-    #     note.
-    # end
+    # Authentification section
+    # ------------------------
+
+    # Login with Twitter Oauth
     get '/auth/login' do
+        # Init oauth twitter client
+        @client = TwitterOAuth::Client.new(
+            :consumer_key => settings.twitter['consumer_key'],
+            :consumer_secret => settings.twitter['consumer_secret']
+        )
+
         request_token = @client.authentication_request_token(:oauth_callback => 'http://localhost:9292/twitter_callback')
         puts "First TOKEN"
         puts request_token.token
@@ -133,7 +147,14 @@ class LoconotApp < Sinatra::Base
 
         redirect request_token.authorize_url
     end
+
+    # Twitter Callback
     get '/twitter_callback' do
+        # Init oauth twitter client
+        @client = TwitterOAuth::Client.new(
+            :consumer_key => settings.twitter['consumer_key'],
+            :consumer_secret => settings.twitter['consumer_secret']
+        )
         # Get previous secret stored into memcached
         token_secret = @memc.get(params[:oauth_token])
           # Exchange the request token for an access token.
@@ -147,6 +168,7 @@ class LoconotApp < Sinatra::Base
 
         if @client.authorized?
             # Storing the access tokens so we don't have to go back to Twitter again
+            session['access_token'] = @access_token.token
             current_user = User.find_by_access_token(@access_token.token)
             if !current_user
                 @user_info = @client.info
@@ -160,6 +182,11 @@ class LoconotApp < Sinatra::Base
             end
             return "#{current_user.to_json}"
         end
+    end
+
+    # Logout by destroying current session
+    get '/logout' do
+        session.destroy
     end
 
 end
