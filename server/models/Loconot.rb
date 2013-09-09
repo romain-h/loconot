@@ -1,4 +1,3 @@
-## Def Models
 class Loconot
     include MongoMapper::Document
 

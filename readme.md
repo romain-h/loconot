@@ -21,3 +21,7 @@ Token Facebook contre une cle api:
 - On right click on a place: display a new addBox and resolve address
 - Remove tmp and use View object to store results
 - Keep a simple Windows box on Marker on map @ la tooltip
+
+
+Client full stateless. Client s'authentifie auprès de Twitter. Renvoie access_token.
+Cookie passenger mode Apache pour hoster l'api sur un sous domaine et ainsi ne pas s'embeter

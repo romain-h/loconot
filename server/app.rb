@@ -19,8 +19,10 @@ class LoconotApp < Sinatra::Base
     register Sinatra::ConfigFile
     config_file 'config/env.yml'
     enable :sessions
+    set :public_folder, File.dirname(__FILE__) + '/../client/'
 
     # Handle CORS ..
+    # Not used anymore since we choosed to serve client directly with rackup
     use Rack::Cors do
         allow do
             origins 'localhost:9292', 'localhost:8000'
@@ -68,24 +70,19 @@ class LoconotApp < Sinatra::Base
         @memc = Dalli::Client.new('localhost:11211', { :namespace => 'loconot'})
     end
 
-    ## API
+    ## Static client
+    # From now we are gonna use rackup to serve static client
     get '/' do
-        backup = "#{settings.twitter}"
-        firstNote = Loconot.all()
-        firstNote.each { |i|
-            puts i.title.to_s
-        }
-
-        # firstNote = Loconot.create({:title => "Premiere note Youhou", :lng => 324524.2, :lat => 23423423})
-        # firstNote.save!
-        return "#{session} #{firstNote.to_json}"
+        content_type 'text/html'
+        send_file File.join(settings.public_folder, 'index.html')
     end
 
+    ## API
     # GET All loconot ressources
     get '/api/loconots' do
         tryAccessToken
-        puts  session.to_json
         notes = Loconot.all()
+        puts notes.to_json
         return notes.to_json
     end
 
