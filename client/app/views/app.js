@@ -5,6 +5,7 @@ define(function(require) {
   require('bootstrapDropdown');
   var Handlebars = require('handlebars');
   var LoconotViewSingle = require('views/loconot');
+  var UserViewSingle = require('views/user');
   var AddNewBoxView = require('views/AddNewBox');
   require('templates');
 
@@ -19,7 +20,8 @@ define(function(require) {
     events: {
       'click #addLoconotBtn': 'displayAddNewBox',
       'click #clear-completed': 'clearCompleted',
-      'click #toggle-all': 'toggleAllComplete'
+      'click #toggle-all': 'toggleAllComplete',
+      'click #connect': 'login'
     },
 
     // At initialization we bind to the relevant events on the `Todos`
@@ -27,10 +29,11 @@ define(function(require) {
     // loading any preexisting todos that might be saved in *localStorage*.
     initialize: function() {
       this.listenTo(app.collections.loconots, 'add', this.addOne);
+      this.listenTo(app.collections.loconots, 'change', this.render);
       this.listenTo(app.collections.loconots, 'remove', this.render);
       this.listenTo(this, 'displayMainStatus', this.status);
       this.listenTo(this, 'removeAddbox', this.removeAddBox);
-      app.collections.loconots.fetch();
+      // app.collections.loconots.fetch();
       // Set map dom on load
       app.gmap = new app.GmapApi('map-canvas');
 
@@ -67,6 +70,25 @@ define(function(require) {
     addAll: function() {
       this.$('#v').html('');
       app.collections.todos.each(this.addOne, this);
+    },
+
+    login: function(){
+      var options = 'location=0,status=0,width=800,height=400';
+      var loginpopup  = window.open('/auth/login', 'Login Twitter', options);
+      var callback = this.loginCallback;
+      var oauthInterval = window.setInterval(function(){
+                  if (loginpopup.closed) {
+                      window.clearInterval(oauthInterval);
+                      console.log("LOGGED IN");
+                      callback();
+                  }
+        }, 1000);
+    },
+
+    loginCallback: function(){
+      var userView = new UserViewSingle({model: new app.models.user()});
+      app.collections.loconots.fetch();
+      // app.user = new app.models.user();
     }
 
     // filterOne : function (todo) {

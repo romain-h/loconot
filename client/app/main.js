@@ -4,6 +4,7 @@ define(function(require) {
   var app = require('app');
   var Router = require('routers/Router');
   var LoconotModel = require('models/loconot');
+  var UserModel = require('models/user');
   var LoconotsCol =  require('collections/loconots');
   var AppView = require('views/app');
 
@@ -19,6 +20,7 @@ define(function(require) {
     app.collections.loconots = new LoconotsCol();
 
     app.models.loconot = LoconotModel;
+    app.models.user = UserModel;
     app.routers.application = new Router();
     Backbone.history.start();
     app.views.main = new AppView();

@@ -186,13 +186,20 @@ class LoconotApp < Sinatra::Base
                                             })
                 current_user.save!
             end
-            return "#{current_user.to_json}"
+            # Return script to close login popup
+            content_type 'text/html'
+            <<-HTML
+              <script>
+              window.close();
+              </script>
+            HTML
         end
     end
 
     # Logout by destroying current session
     get '/logout' do
         session.clear
+        redirect '/'
     end
 
     get '/islogged' do
