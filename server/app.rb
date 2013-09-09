@@ -48,16 +48,16 @@ class LoconotApp < Sinatra::Base
     helpers do
         # Useful method to check if the current request is signed by cookie
         def tryAccessToken
-            if session['access_token'].nil?
+            if session[:access_token].nil?
                 haltCustom(401, 'Authentication is required to access this resource.')
             end
         end
 
         # Custom halt methode to return std json content
         def haltCustom(status_code, message)
-            content = {'status' => "error",
-            'status_code' => status_code,
-            'messagge' => message
+            content = {:status => "error",
+            :status_code => status_code,
+            :message => message
             }
             halt status_code, content.to_json
         end
@@ -124,6 +124,18 @@ class LoconotApp < Sinatra::Base
         status 204
     end
 
+    get '/api/me' do
+        tryAccessToken
+        @client = TwitterOAuth::Client.new(
+            :consumer_key => settings.twitter[:consumer_key],
+            :consumer_secret => settings.twitter[:consumer_secret],
+            :token => session[:access_token],
+            :secret => session[:secret_token]
+        )
+        currentUser = User.find_by_access_token(session[:access_token])
+        haltCustom(404, 'The ressource has not been found') if currentUser.nil?
+        return @client.info.to_json
+    end
     # Authentification section
     # ------------------------
 
@@ -131,17 +143,13 @@ class LoconotApp < Sinatra::Base
     get '/auth/login' do
         # Init oauth twitter client
         @client = TwitterOAuth::Client.new(
-            :consumer_key => settings.twitter['consumer_key'],
-            :consumer_secret => settings.twitter['consumer_secret']
+            :consumer_key => settings.twitter[:consumer_key],
+            :consumer_secret => settings.twitter[:consumer_secret]
         )
 
         request_token = @client.authentication_request_token(:oauth_callback => 'http://localhost:9292/twitter_callback')
-        puts "First TOKEN"
-        puts request_token.token
-        puts request_token.secret
         # Store linked token_secret into memcached
-          @memc.set(request_token.token, request_token.secret)
-
+        session[:request_token_secret] = request_token.secret
         redirect request_token.authorize_url
     end
 
@@ -149,8 +157,8 @@ class LoconotApp < Sinatra::Base
     get '/twitter_callback' do
         # Init oauth twitter client
         @client = TwitterOAuth::Client.new(
-            :consumer_key => settings.twitter['consumer_key'],
-            :consumer_secret => settings.twitter['consumer_secret']
+            :consumer_key => settings.twitter[:consumer_key],
+            :consumer_secret => settings.twitter[:consumer_secret]
         )
         # Get previous secret stored into memcached
         token_secret = @memc.get(params[:oauth_token])
@@ -165,13 +173,14 @@ class LoconotApp < Sinatra::Base
 
         if @client.authorized?
             # Storing the access tokens so we don't have to go back to Twitter again
-            session['access_token'] = @access_token.token
+            session[:access_token] = @access_token.token
+            session[:secret_token] = @access_token.secret
             current_user = User.find_by_access_token(@access_token.token)
             if !current_user
                 @user_info = @client.info
 
-                current_user = User.create({:twitter_id => @user_info['id'],
-                                            :name => @user_info['name'],
+                current_user = User.create({:twitter_id => @user_info[:id],
+                                            :name => @user_info[:name],
                                             :access_token => @access_token.token,
                                             :access_token_secret => @access_token.secret
                                             })
@@ -183,7 +192,10 @@ class LoconotApp < Sinatra::Base
 
     # Logout by destroying current session
     get '/logout' do
-        session.destroy
+        session.clear
     end
 
+    get '/islogged' do
+        return {:islogged => !session[:access_token].nil?}.to_json
+    end
 end
