@@ -80,7 +80,7 @@ class LoconotApp < Sinatra::Base
     get '/api/loconots' do
         tryAccessToken
         puts session[:user_id]
-        notes = Loconot.find_by_user_id(session[:user_id].to_s)
+        notes = Loconot.find_all_by_user_id(session[:user_id].to_s)
         # Add null test
         puts notes.to_json
         return notes.to_json
@@ -208,9 +208,5 @@ class LoconotApp < Sinatra::Base
     get '/logout' do
         session.clear
         redirect '/'
-    end
-
-    get '/islogged' do
-        return {:islogged => !session[:access_token].nil?}.to_json
     end
 end

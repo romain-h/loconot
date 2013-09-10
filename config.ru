@@ -3,5 +3,5 @@ require 'bundler'
 
 Bundler.require
 require 'sinatra'
-require './app'
+require './server/app'
 run LoconotApp
