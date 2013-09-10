@@ -166,7 +166,7 @@ class LoconotApp < Sinatra::Base
             :consumer_secret => settings.twitter[:consumer_secret]
         )
         # Get previous secret stored into memcached
-        token_secret = @memc.get(params[:oauth_token])
+        token_secret = session[:request_token_secret]
           # Exchange the request token for an access token.
           @access_token = @client.authorize(
             params[:oauth_token],
@@ -174,7 +174,7 @@ class LoconotApp < Sinatra::Base
             :oauth_verifier => params[:oauth_verifier]
           )
 
-          puts @memc.get(params[:oauth_token])
+          # puts @memc.get(params[:oauth_token])
 
         if @client.authorized?
             # Storing the access tokens so we don't have to go back to Twitter again
