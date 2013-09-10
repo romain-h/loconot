@@ -6,7 +6,7 @@ define(function(require) {
   var Handlebars = require('handlebars');
   var LoconotViewSingle = require('views/loconot');
   var UserViewSingle = require('views/user');
-  var AddNewBoxView = require('views/AddNewBox');
+  var AddNewBoxView = require('views/addNewBox');
   require('templates');
 
   // App Main View
