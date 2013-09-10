@@ -6,7 +6,6 @@ require 'mongo_mapper'
 require 'json'
 require 'yaml'
 require 'twitter_oauth'
-require 'dalli'
 
 # Load path for models
 $:.unshift File.join(File.dirname(__FILE__),'models')
@@ -33,15 +32,16 @@ class LoconotApp < Sinatra::Base
     configure do
         set :allow_origin, :any
         if settings.production?
-            MongoMapper.setup({'production' => {'uri' => ENV['MONGODB_URI']}}, 'production')
+            MongoMapper.setup({'production' => settings.db}, 'production')
         else
             MongoMapper.setup({'development' => settings.db}, 'development')
-            # if ENV['MONGOHQ_URL']
-            # puts "Running on MongoHQ"
-            # uri = URI.parse(ENV['MONGOHQ_URL'])
-            # MongoMapper.connection = Mongo::Connection.new(uri.host, uri.port)
-            # MongoMapper.database = uri.path.gsub(/^\//, '')
-            # MongoMapper.database.authenticate(uri.user, uri.password)
+            if ENV['MONGOHQ_URL']
+                puts "Running on MongoHQ"
+                uri = URI.parse(ENV['MONGOHQ_URL'])
+                MongoMapper.connection = Mongo::Connection.new(uri.host, uri.port)
+                MongoMapper.database = uri.path.gsub(/^\//, '')
+                MongoMapper.database.authenticate(uri.user, uri.password)
+            end
         end
     end
 
@@ -66,8 +66,6 @@ class LoconotApp < Sinatra::Base
     before do
         # This is an api only so we handle only json here
         content_type 'application/json'
-        # Init memcached client
-        @memc = Dalli::Client.new('localhost:11211', { :namespace => 'loconot'})
     end
 
     ## Static client
