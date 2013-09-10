@@ -2,7 +2,7 @@ define(function(require) {
   var Backbone = require('backbone');
   var $ = require('jquery');
   var app = require('app');
-  var Router = require('routers/Router');
+  var Router = require('routers/router');
   var LoconotModel = require('models/loconot');
   var UserModel = require('models/user');
   var LoconotsCol =  require('collections/loconots');
