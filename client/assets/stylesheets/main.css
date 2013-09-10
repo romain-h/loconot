@@ -2616,6 +2616,9 @@ button.close {
 .mainAppView .mainContainer {
   margin: 10px;
 }
+.mainAppView .mainContainer h1 {
+  width: 155px;
+}
 .mainAppView .mainContainer .loconotsList {
   color: #34495e;
   float: left;

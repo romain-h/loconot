@@ -31,6 +31,7 @@ define(function(require) {
       this.listenTo(app.collections.loconots, 'add', this.addOne);
       this.listenTo(app.collections.loconots, 'change', this.render);
       this.listenTo(app.collections.loconots, 'remove', this.render);
+      this.listenTo(this, 'isLoggedIn', this.loginCallback);
       this.listenTo(this, 'displayMainStatus', this.status);
       this.listenTo(this, 'removeAddbox', this.removeAddBox);
       app.collections.loconots.fetch();

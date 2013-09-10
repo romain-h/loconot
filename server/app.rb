@@ -81,7 +81,8 @@ class LoconotApp < Sinatra::Base
     # GET All loconot ressources
     get '/api/loconots' do
         tryAccessToken
-        notes = Loconot.find_by_user_id(session[:user_id])
+        puts session[:user_id]
+        notes = Loconot.find_by_user_id(session[:user_id].to_s)
         # Add null test
         puts notes.to_json
         return notes.to_json

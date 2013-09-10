@@ -24,6 +24,10 @@ define(function(require) {
     app.routers.application = new Router();
     Backbone.history.start();
     app.views.main = new AppView();
+    // Load user if connected
+    $.get('/api/me', function(){
+      app.views.main.trigger('isLoggedIn');
+    });
     // What is the enter key constant?
     app.keys = {
       enter: 13,
