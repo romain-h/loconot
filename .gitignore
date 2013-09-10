@@ -6,6 +6,3 @@
 
 # Builds
 client/js/build
-
-# Server
-server/config/env.yml

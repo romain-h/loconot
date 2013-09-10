@@ -35,6 +35,7 @@ class LoconotApp < Sinatra::Base
             MongoMapper.setup({'production' => settings.db}, 'production')
         else
             MongoMapper.setup({'development' => settings.db}, 'development')
+            # Heroku setup
             if ENV['MONGOHQ_URL']
                 puts "Running on MongoHQ"
                 uri = URI.parse(ENV['MONGOHQ_URL'])
@@ -132,8 +133,8 @@ class LoconotApp < Sinatra::Base
     get '/api/me' do
         tryAccessToken
         @client = TwitterOAuth::Client.new(
-            :consumer_key => settings.twitter[:consumer_key],
-            :consumer_secret => settings.twitter[:consumer_secret],
+            :consumer_key => ENV['LOCONOT_TWITTER_CONSUMER_KEY'],
+            :consumer_secret => ENV['LOCONOT_TWITTER_CONSUMER_SECRET'],
             :token => session[:access_token],
             :secret => session[:secret_token]
         )
@@ -146,13 +147,15 @@ class LoconotApp < Sinatra::Base
 
     # Login with Twitter Oauth
     get '/auth/login' do
+        puts settings.hostname
         # Init oauth twitter client
         @client = TwitterOAuth::Client.new(
-            :consumer_key => settings.twitter[:consumer_key],
-            :consumer_secret => settings.twitter[:consumer_secret]
+            :consumer_key => ENV['LOCONOT_TWITTER_CONSUMER_KEY'],
+            :consumer_secret => ENV['LOCONOT_TWITTER_CONSUMER_SECRET']
         )
 
-        request_token = @client.authentication_request_token(:oauth_callback => 'http://localhost:9292/twitter_callback')
+        url_callback = settings.hostname + '/twitter_callback'
+        request_token = @client.authentication_request_token(:oauth_callback => url_callback)
         # Store linked token_secret into memcached
         session[:request_token_secret] = request_token.secret
         redirect request_token.authorize_url
@@ -162,8 +165,8 @@ class LoconotApp < Sinatra::Base
     get '/twitter_callback' do
         # Init oauth twitter client
         @client = TwitterOAuth::Client.new(
-            :consumer_key => settings.twitter[:consumer_key],
-            :consumer_secret => settings.twitter[:consumer_secret]
+            :consumer_key => ENV['LOCONOT_TWITTER_CONSUMER_KEY'],
+            :consumer_secret => ENV['LOCONOT_TWITTER_CONSUMER_SECRET']
         )
         # Get previous secret stored into memcached
         token_secret = session[:request_token_secret]
