@@ -71,6 +71,7 @@ class LoconotApp < Sinatra::Base
     ## Static client
     # From now we are gonna use rackup to serve static client
     get '/' do
+        puts settings.public_folder
         content_type 'text/html'
         send_file File.join(settings.public_folder, 'index.html')
     end
