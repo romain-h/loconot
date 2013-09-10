@@ -81,7 +81,8 @@ class LoconotApp < Sinatra::Base
     # GET All loconot ressources
     get '/api/loconots' do
         tryAccessToken
-        notes = Loconot.all()
+        notes = Loconot.find_by_user_id(session[:user_id])
+        # Add null test
         puts notes.to_json
         return notes.to_json
     end
@@ -91,6 +92,8 @@ class LoconotApp < Sinatra::Base
         tryAccessToken
         note = Loconot.find_by_id(params[:id])
         haltCustom(404, 'The ressource has not been found') if note.nil?
+        # Add test on current user_id
+        haltCustom(403, 'Ressource access forbidden') if note.user_id != session[:user_id]
         return note.to_json
     end
 
@@ -98,7 +101,8 @@ class LoconotApp < Sinatra::Base
     post '/api/loconots' do
         tryAccessToken
         data = JSON.parse(request.body.read)
-        puts data
+        # Add current user id
+        data[:user_id] = session[:user_id]
         # TODO add a condition on data. try/catch MongoMapper::DocumentNotValid
         note = Loconot.create(data)
         note.save!
@@ -107,6 +111,7 @@ class LoconotApp < Sinatra::Base
 
     # PUT Modify an existing loconot ressource
     put '/api/loconots/:id' do
+        tryAccessToken
         note = Loconot.find_by_id(params[:id])
         # TODO add a condition on data?!!
         data = JSON.parse(request.body.read)
@@ -115,6 +120,7 @@ class LoconotApp < Sinatra::Base
 
     # DELETE an existing loconot ressource
     delete '/api/loconots/:id' do
+        tryAccessToken
         begin
            Loconot.destroy(params[:id])
         # Catch MongoMapper Exception on not found
@@ -186,6 +192,9 @@ class LoconotApp < Sinatra::Base
                                             })
                 current_user.save!
             end
+            session[:user_id] = current_user.id
+
+            puts session[:user_id]
             # Return script to close login popup
             content_type 'text/html'
             <<-HTML

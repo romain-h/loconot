@@ -33,7 +33,7 @@ define(function(require) {
       this.listenTo(app.collections.loconots, 'remove', this.render);
       this.listenTo(this, 'displayMainStatus', this.status);
       this.listenTo(this, 'removeAddbox', this.removeAddBox);
-      // app.collections.loconots.fetch();
+      app.collections.loconots.fetch();
       // Set map dom on load
       app.gmap = new app.GmapApi('map-canvas');
 
