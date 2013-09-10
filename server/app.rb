@@ -32,9 +32,6 @@ class LoconotApp < Sinatra::Base
     configure do
         set :allow_origin, :any
         if settings.production?
-            MongoMapper.setup({'production' => settings.db}, 'production')
-        else
-            MongoMapper.setup({'development' => settings.db}, 'development')
             # Heroku setup
             if ENV['MONGOHQ_URL']
                 puts "Running on MongoHQ"
@@ -43,6 +40,8 @@ class LoconotApp < Sinatra::Base
                 MongoMapper.database = uri.path.gsub(/^\//, '')
                 MongoMapper.database.authenticate(uri.user, uri.password)
             end
+        else
+            MongoMapper.setup({'development' => settings.db}, 'development')
         end
     end
 
