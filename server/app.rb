@@ -30,7 +30,7 @@ class LoconotApp < Sinatra::Base
     end
 
     configure do
-        set :allow_origin, :any
+        # set :allow_origin, :any
         if settings.production?
             # Heroku setup
             if ENV['MONGOHQ_URL']
