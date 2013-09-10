@@ -11,6 +11,6 @@ define(function(require) {
     model: LoconotModel,
 
     // Api storage link
-    url: 'http://localhost:9292/api/loconots'
+    url: '/api/loconots'
   });
 });
