@@ -22,12 +22,12 @@ class LoconotApp < Sinatra::Base
 
     # Handle CORS ..
     # Not used anymore since we choosed to serve client directly with rackup
-    use Rack::Cors do
-        allow do
-            origins 'localhost:9292', 'localhost:8000'
-            resource '*', :headers => :any, :methods => [:get, :post, :options, :put, :delete]
-        end
-    end
+    # use Rack::Cors do
+    #     allow do
+    #         origins 'localhost:9292', 'localhost:8000'
+    #         resource '*', :headers => :any, :methods => [:get, :post, :options, :put, :delete]
+    #     end
+    # end
 
     configure do
         # set :allow_origin, :any
@@ -71,7 +71,6 @@ class LoconotApp < Sinatra::Base
     ## Static client
     # From now we are gonna use rackup to serve static client
     get '/' do
-        puts settings.public_folder
         content_type 'text/html'
         send_file File.join(settings.public_folder, 'index.html')
     end
@@ -80,10 +79,8 @@ class LoconotApp < Sinatra::Base
     # GET All loconot ressources
     get '/api/loconots' do
         tryAccessToken
-        puts session[:user_id]
         notes = Loconot.find_all_by_user_id(session[:user_id].to_s)
         # Add null test
-        puts notes.to_json
         return notes.to_json
     end
 
@@ -147,7 +144,6 @@ class LoconotApp < Sinatra::Base
 
     # Login with Twitter Oauth
     get '/auth/login' do
-        puts settings.hostname
         # Init oauth twitter client
         @client = TwitterOAuth::Client.new(
             :consumer_key => ENV['LOCONOT_TWITTER_CONSUMER_KEY'],
@@ -196,7 +192,6 @@ class LoconotApp < Sinatra::Base
             end
             session[:user_id] = current_user.id
 
-            puts session[:user_id]
             # Return script to close login popup
             content_type 'text/html'
             <<-HTML

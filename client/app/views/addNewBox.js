@@ -1,9 +1,9 @@
 define(function(require) {
+  require('templates');
   var Backbone = require('backbone');
   var $ = require('jquery');
   var app = require('app');
   var Handlebars = require('handlebars');
-  require('templates');
 
   // AaddNewBox Main View
   // --------------------
@@ -19,21 +19,26 @@ define(function(require) {
       this.listenTo(this.model, 'invalid', this.errorHandler);
       this.render();
     },
+
+    // Render new box view
     render: function () {
       this.$el.html(this.template());
       // set other fields
       this.$otherFields = this.$('#otherFields');
       return this;
     },
-    // Delegated events for creating new items, and clearing completed ones.
+
+    // Delegated events for creating new item
     events: {
       'keypress #addressSearch': 'searchAddress',
       'click #search-res a': 'secondSelectionByAddress',
       'click #validationBtn': 'updateModel'
     },
+
     errorHandler: function(){
-      console.log('Error mon pote');
+      console.log('Error on model');
     },
+
     setCurrentViewAddress: function(_address){
       // Empty tmp results
       this.resList = null;
@@ -53,6 +58,8 @@ define(function(require) {
       // Display other fields
       this.$otherFields.show();
     },
+
+    // Search an address on enter with input value
     searchAddress: function( event ) {
       if ( event.which !== app.keys.enter || !this.$('#addressSearch').val().trim() ) {
         // DO BETTER EMPTY DETECTION...
@@ -64,6 +71,8 @@ define(function(require) {
       // Callback findAddress with context on geocoder search
       app.gmap.search(this.$('#addressSearch').val().trim(), this.findAddress.bind(this));
     },
+
+    // Update current model with more informations
     updateModel: function(){
       var latlng = this.currentAddress.geometry.location;
       var resAttrs = {
@@ -78,6 +87,8 @@ define(function(require) {
       app.views.main.trigger('displayMainStatus', 'alert-success', resAttrs.title + ' added as a new loconot.');
       app.views.main.trigger('removeAddbox');
     },
+
+    // Geocoder search callback
     findAddress: function(results, status){
         if (status == google.maps.GeocoderStatus.OK) {
           // If more than one res, manual choosing place:
@@ -91,6 +102,8 @@ define(function(require) {
           console.log("Geocode was not successful for the following reason: " + status);
         }
     },
+
+    // seconde selection event
     secondSelectionByAddress: function(ev){
       // Get the # selected
       var selection = $(ev.target).data('nb');

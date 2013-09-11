@@ -25,3 +25,13 @@ Token Facebook contre une cle api:
 
 Client full stateless. Client s'authentifie auprès de Twitter. Renvoie access_token.
 Cookie passenger mode Apache pour hoster l'api sur un sous domaine et ainsi ne pas s'embeter
+
+
+
+@todo
+lintjs
+
+Why listenTO? Unbind event on destroy view ?
+Utiliser listenTO seulement sur un autre object SINON this.on(ev,callback)
+
+Revoir le pattern singleton: new app.user ...

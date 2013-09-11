@@ -2,7 +2,6 @@ define(function(require) {
   var Backbone = require('backbone');
   var $ = require('jquery');
   var app = require('app');
-  var Router = require('routers/router');
   var LoconotModel = require('models/loconot');
   var UserModel = require('models/user');
   var LoconotsCol =  require('collections/loconots');
@@ -15,14 +14,15 @@ define(function(require) {
     app.window = {};
     app.window.height = $(window).height();
     $('#map-canvas').css({height: app.window.height});
-    // Init filters
-    app.TodoFilter = '';
+
+    // Loconot collection singleton
     app.collections.loconots = new LoconotsCol();
 
     app.models.loconot = LoconotModel;
-    app.models.user = UserModel;
-    app.routers.application = new Router();
+    // User singleton
+    app.models.user = new UserModel();
     Backbone.history.start();
+    // Main app view singleton
     app.views.main = new AppView();
     // Load user if connected
     $.get('/api/me', function(){
@@ -34,8 +34,6 @@ define(function(require) {
       suppr: 27
     };
     console.log(app);
-    app.tmp = {};
-
     return app;
   };
 
@@ -50,19 +48,7 @@ define(function(require) {
     constructor: app.GmapApi,
     initializeMaps: function(domId) {
       var self = this;
-      // Use new map style
-      // google.maps.visualRefresh = true;
-      // var styles = [
-      //   {
-      //     stylers: [
-      //       { lightness: 33 },
-      //       { saturation: -75 }
-      //     ],
-      //     elementType: "geometry"
-
-      //   }
-      // ];
-      //
+      // Define style
       var styles = [{"featureType": "landscape.man_made","elementType": "geometry","stylers": [{"color": "#e4e4e4"}]}, {"featureType": "poi.park","elementType": "geometry","stylers": [{"color": "#c5c5c5"}]}, {"featureType": "road","elementType": "geometry.fill","stylers": [{"color": "#ffffff"}]}, {"featureType": "road","elementType": "geometry.stroke","stylers": [{"color": "#c9c9c9"}]}, {"featureType": "road","elementType": "labels.text.stroke","stylers": [{"weight": 0.1}]}, {"featureType": "road","elementType": "labels.icon","stylers": [{"visibility": "off"}]}];
 
       // Init Map Object
@@ -108,43 +94,12 @@ define(function(require) {
     }
   };
 
-
-
-  // google.maps.event.addDomListener(window, 'load', app.gmap.initializeMaps);
-
-
-
-
-  //       var lastMarker;
-  //       var newLocation;
-  //       var map;
-  // function load() {
-  //       if (GBrowserIsCompatible()) {
-  //           map = new GMap2(document.getElementById("map"));
-  //           map.addControl(new GSmallMapControl());
-  //           map.addControl(new GMapTypeControl());
-  //           map.setCenter(new GLatLng(37.4, -122.1), 13);
-
-  //   // This deletes the marker when clicked on if it is a temporary marker
-  //   GEvent.addListener(map, "click", function(marker,point) {
-  //   if (marker && marker.openInfoWindowHtml) {
-  //               lastMarker = marker;
-  //               marker.openInfoWindowHtml("This marker's position is: <b>" + "<br />" + "Latitude: " + marker.getPoint().lat().toString() + "<br />" + "Longitude: " + marker.getPoint().lng().toString()+"</b><br/><a href='javascript:map.removeOverlay(lastMarker);'>remove</a>");
-  //   } else if (point) {
-  //         newLocation = new GMarker(point);
-  //   map.addOverlay(newLocation);
-  //               newLocation.openInfoWindowHtml("This marker's position is: <b>" + "<br />" + "Latitude: " + point.lat().toString() + "<br />" + "Longitude: " + point.lng().toString()+"</b><br/><a href='javascript:map.removeOverlay(newLocation);'>remove</a>");
-  //               }
-  //     });
-  //       }
-  // }
-
-
-
+  // Main entry point when document is ready
   $(document).ready(function () {
-      test = init();
+      var test = init();
   });
 
+  // Resize window handler to resize map
   $(window).resize(function(){
     app.window.height = $(window).height();
     $('#map-canvas').css({height: app.window.height});

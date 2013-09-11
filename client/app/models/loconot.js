@@ -1,11 +1,9 @@
 define(function(require) {
   var Backbone = require('backbone');
-  var $ = require('jquery');
 
   // Loconot Model
   return Backbone.Model.extend({
-
-    // Default attributes ensure that each todo created has `title` and `completed` keys.
+    // Add defaults value
     defaults: {
       id: null,
       rate: 0
