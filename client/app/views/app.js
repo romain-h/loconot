@@ -1,4 +1,5 @@
 define(function(require) {
+  require('templates');
   var Backbone = require('backbone');
   var $ = require('jquery');
   var app = require('app');
@@ -6,7 +7,6 @@ define(function(require) {
   var LoconotViewSingle = require('views/loconot');
   var UserViewSingle = require('views/user');
   var AddNewBoxView = require('views/addNewBox');
-  require('templates');
 
   // App Main View
   // -------------

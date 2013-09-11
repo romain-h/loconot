@@ -1,9 +1,9 @@
 define(function(require) {
+  require('templates');
   var Backbone = require('backbone');
   var $ = require('jquery');
   var app = require('app');
   var Handlebars = require('handlebars');
-  require('templates');
 
   // Loconot Item View
   // -----------------
