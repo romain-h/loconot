@@ -64,7 +64,7 @@ class LoconotApp < Sinatra::Base
     end
 
     before do
-        # This is an api only so we handle only json here
+        # This is an api only so we handle mainly json here
         content_type 'application/json'
     end
 
@@ -75,7 +75,10 @@ class LoconotApp < Sinatra::Base
         send_file File.join(settings.public_folder, 'index.html')
     end
 
-    ## API
+    # -----------
+    # API section
+    # -----------
+
     # GET All loconot ressources
     get '/api/loconots' do
         tryAccessToken
@@ -127,6 +130,7 @@ class LoconotApp < Sinatra::Base
         status 204
     end
 
+    # Get user info directly from twitter
     get '/api/me' do
         tryAccessToken
         @client = TwitterOAuth::Client.new(
@@ -139,6 +143,8 @@ class LoconotApp < Sinatra::Base
         haltCustom(404, 'The ressource has not been found') if currentUser.nil?
         return @client.info.to_json
     end
+
+    # ------------------------
     # Authentification section
     # ------------------------
 

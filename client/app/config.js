@@ -9,7 +9,6 @@ require.config({
     underscore: '../vendor/js/underscore',
     backbone: '../vendor/js/backbone',
     handlebars: '../vendor/js/handlebars.runtime',
-    backboneLocalstorage: '../vendor/js/backbone.localStorage',
     templates: '../js/build/templates'
   },
 

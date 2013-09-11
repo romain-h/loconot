@@ -1,37 +1,24 @@
 # Loconot
 
-Ideas:
-- Add a simple annotation to a current address.
-- Add a simple annotation to any address.
+Available on http://loconot.herokuapp.com
 
-Design:
-- Backend (API Restfull)  RoR ou bien microframework:
-Sinatra (Restful gem "Grape") ou bien "rabbit".
-Setup a Facebook and Twitter oauth.
-- FrontEnd Backbone.js. Add Maps V3 js api.
-- Titanium or phonegap portage.
+Have you ever used the stars option into Google Maps? This awesome feature is provided by Google directly into Maps and let users put some stars on their favorites places over the world. Unfortunately it's currently impossible to customize this marker, by adding comments or note. Then I decided to implement this feature by playing around with Backbone.js.
 
-Token Facebook contre une cle api:
+[img]
 
+## Description
 
-## @TODO:
+The main goal of this project is to get an insight regarding attractives technologies and mainly Backbone.js. This project is my first MV* JS project. It is also a good way to play with an ODM and improving my skills in ruby.
 
-- Use requirejs async plugin to load gmaps
-- Choose between addBox Bacbone View ou just std DOM elt? => Backbone View Definitly!
-- On right click on a place: display a new addBox and resolve address
-- Remove tmp and use View object to store results
-- Keep a simple Windows box on Marker on map @ la tooltip
+### Design
+ - **Backend/Server**: Restfull API - Ruby - Sinatra Framework
+ - **Frontend/Client**: Stateless Client - JavaScript - Backbone.js Framework
+ - **Database**: MongoDB
 
+### Tools
+GoogleMapsApi (v3), TwitterApi, Require.js, Underscore.js, jQuery, Handlebars, Less.
 
-Client full stateless. Client s'authentifie auprès de Twitter. Renvoie access_token.
-Cookie passenger mode Apache pour hoster l'api sur un sous domaine et ainsi ne pas s'embeter
+## Extensions / ToDo
 
+- Phonegapp portage.
 
-
-@todo
-lintjs
-
-Why listenTO? Unbind event on destroy view ?
-Utiliser listenTO seulement sur un autre object SINON this.on(ev,callback)
-
-Revoir le pattern singleton: new app.user ...
