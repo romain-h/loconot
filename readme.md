@@ -2,7 +2,7 @@
 
 Available on http://loconot.herokuapp.com
 
-Have you ever used the stars option into Google Maps? This awesome feature is provided by Google directly into Maps and let users put some stars on their favorites places over the world. Unfortunately it's currently impossible to customize this marker, by adding comments or note. Then I decided to implement this feature by playing around with Backbone.js.
+Have you ever used the stars option on Google Maps? This awesome feature is provided by Google directly into Maps and let users put some stars on their favorites places over the world. Unfortunately it's currently impossible to customize this marker, by adding comments or notes. Then I decided to implement this feature by playing around with Backbone.js.
 
 [img]
 
