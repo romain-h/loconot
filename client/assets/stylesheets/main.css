@@ -2612,12 +2612,24 @@ button.close {
   left: 25px;
   width: 350px;
   background: rgba(255, 255, 255, 0.8);
+  border-radius: 3px;
 }
 .mainAppView .mainContainer {
   margin: 10px;
 }
 .mainAppView .mainContainer h1 {
+  float: left;
   width: 155px;
+}
+.mainAppView .mainContainer .loginSection {
+  float: right;
+  margin-top: 14px;
+  width: 150px;
+}
+.mainAppView .mainContainer .loginSection img {
+  float: right;
+  margin-right: 5px;
+  box-shadow: 2px 3px 8px #888888;
 }
 .mainAppView .mainContainer .loconotsList {
   color: #34495e;

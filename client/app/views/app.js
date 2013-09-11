@@ -36,6 +36,8 @@ define(function(require) {
 
       this.$addBtn = this.$('#addLoconotBtn');
       this.$status = this.$('#statusBox');
+      // Hide button
+      this.$addBtn.hide();
     },
 
     // Status box handler to display any message for the user
@@ -91,6 +93,7 @@ define(function(require) {
       var userView = new UserViewSingle({ model: app.models.user });
       // Refetch collection for connected user
       app.collections.loconots.fetch();
+      this.$addBtn.show();
     }
 
   });

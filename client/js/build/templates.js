@@ -65,14 +65,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + " <img src=\"";
+  buffer += "<img src=\"";
   if (stack1 = helpers.profile_image_url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.profile_image_url; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" alt=\"Profile Picutre\">";
+    + "\" alt=\"Profile Picture\">";
   return buffer;
   });
 })();
