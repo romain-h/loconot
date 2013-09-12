@@ -90,8 +90,6 @@ define(function(require) {
 
     // Login Callback
     loginCallback: function(){
-      console.log("THIS LOGIN");
-      console.log(this);
       var userView = new UserViewSingle({ model: app.models.user });
       // Refetch collection for connected user
       app.collections.loconots.fetch();
