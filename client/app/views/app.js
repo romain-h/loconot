@@ -78,7 +78,7 @@ define(function(require) {
     login: function(){
       var options = 'location=0,status=0,width=800,height=400';
       var loginpopup  = window.open('/auth/login', 'Login Twitter', options);
-      var callback = this.loginCallback;
+      var callback = this.loginCallback.bind(this);
       var oauthInterval = window.setInterval(function(){
                   if (loginpopup.closed) {
                       window.clearInterval(oauthInterval);
@@ -90,6 +90,8 @@ define(function(require) {
 
     // Login Callback
     loginCallback: function(){
+      console.log("THIS LOGIN");
+      console.log(this);
       var userView = new UserViewSingle({ model: app.models.user });
       // Refetch collection for connected user
       app.collections.loconots.fetch();
