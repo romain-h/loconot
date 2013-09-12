@@ -189,8 +189,8 @@ class LoconotApp < Sinatra::Base
             if !current_user
                 @user_info = @client.info
 
-                current_user = User.create({:twitter_id => @user_info[:id],
-                                            :name => @user_info[:name],
+                current_user = User.create({:twitter_id => @user_info['id'],
+                                            :name => @user_info['name'],
                                             :access_token => @access_token.token,
                                             :access_token_secret => @access_token.secret
                                             })
