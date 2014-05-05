@@ -1,6 +1,6 @@
 define(function(require) {
-  var Backbone = require('backbone');
-  var $ = require('jquery');
+  'use strict';
+
   var app = require('app');
   var template = require('templates/addNewBox');
 

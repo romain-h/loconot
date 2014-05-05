@@ -1,5 +1,7 @@
 define(function(require) {
-  var Backbone = require('backbone');
+  'use strict';
+
+  require('app');
 
   // Loconot Model
   return Backbone.Model.extend({

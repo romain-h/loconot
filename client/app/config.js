@@ -28,6 +28,9 @@ require.config({
     handlebars: {
       exports: 'Handlebars'
     },
+    jquery: {
+      exports: 'jQuery'
+    },
     templates: {
       deps: ['handlebars']
     }

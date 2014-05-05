@@ -1,15 +1,11 @@
 define(function(require) {
-  var Backbone = require('backbone');
-  var $ = require('jquery');
+  'use strict';
+
   var app = require('app');
   var LoconotModel = require('models/loconot');
   var UserModel = require('models/user');
   var LoconotsCol =  require('collections/loconots');
   var AppView = require('views/app');
-
-  // Bootstrap js
-  require('bootstrapDropdown');
-  require('bootstrapModal');
 
   // initialization function
   var init = function() {
@@ -100,7 +96,7 @@ define(function(require) {
 
   // Main entry point when document is ready
   $(document).ready(function () {
-      var test = init();
+      init();
   });
 
   // Resize window handler to resize map

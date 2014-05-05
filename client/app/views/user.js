@@ -1,8 +1,8 @@
 define(function(require) {
-  var Backbone = require('backbone');
-  var $ = require('jquery');
+  'use strict';
+
   var app = require('app');
-  var template = require('templates/user')
+  var template = require('templates/user');
 
   // User View
   // ---------
@@ -14,7 +14,6 @@ define(function(require) {
 
     initialize: function() {
       this.listenTo(this.model, 'change', this.render);
-      console.log("NEW USER VIEW");
       this.model.fetch();
     },
 

@@ -1,4 +1,7 @@
-define([], function() {
+define(function(require) {
+  'use strict';
+
+  require('backbone');
   var app = {
     // The root path to run the application.
     root: '/',

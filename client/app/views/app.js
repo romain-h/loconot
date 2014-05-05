@@ -1,8 +1,7 @@
 define(function(require) {
-  var Backbone = require('backbone');
-  var $ = require('jquery');
+  'use strict';
+
   var app = require('app');
-  var Handlebars = require('handlebars');
   var LoconotViewSingle = require('views/loconot');
   var UserViewSingle = require('views/user');
   var AddNewBoxView = require('views/addNewBox');
