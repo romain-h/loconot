@@ -7,6 +7,9 @@
 ## Bower
 client/bower_components
 
+## NPM
+npm-debug.log
+
 # Builds
 # client/js/build
 
