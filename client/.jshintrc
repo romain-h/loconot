@@ -1,0 +1,24 @@
+{
+  browser: true,
+  curly: true,
+  eqeqeq: true,
+  forin: true,
+  globals: {
+      define: false,
+      Backbone: false,
+      $: false,
+      _: false,
+  }
+  immed: true,
+  indent: 2,
+  latedef: true,
+  maxdepth: 4,
+  newcap: true,
+  noarg: true,
+  node: false,
+  nonew: true,
+  strict: true,
+  trailing: true,
+  undef: true,
+  unused: true,
+}
