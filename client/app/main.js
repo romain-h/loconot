@@ -25,8 +25,10 @@ define(function(require) {
     // Main app view singleton
     app.views.main = new AppView();
     // Load user if connected
+    app.loader.start();
     $.get('/api/me', function(){
       app.views.main.trigger('isLoggedIn');
+      app.loader.done();
     });
     // What is the enter key constant?
     app.keys = {

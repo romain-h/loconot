@@ -2,6 +2,8 @@ define(function(require) {
   'use strict';
 
   require('backbone');
+  var nprogress = require('nprogress');
+
   var app = {
     // The root path to run the application.
     root: '/',
@@ -9,7 +11,8 @@ define(function(require) {
     models: {},
     collections: {},
     routers: {},
-    keys: {}
+    keys: {},
+    loader: nprogress
   };
 
   return app;

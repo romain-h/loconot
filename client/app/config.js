@@ -5,13 +5,14 @@ require.config({
 
   paths: {
     // Libraries
+    backbone: '../bower_components/backbone/backbone',
     bootstrapDropdown: '../bower_components/bootstrap/js/dropdown',
     bootstrapModal: '../bower_components/bootstrap/js/modal',
-    jquery: '../bower_components/jquery/dist/jquery',
-    underscore: '../bower_components/underscore/underscore',
-    backbone: '../bower_components/backbone/backbone',
     handlebars: '../vendor/js/handlebars.runtime',
-    templates: 'templates/precompiled/templates'
+    jquery: '../bower_components/jquery/dist/jquery',
+    nprogress: '../bower_components/nprogress/nprogress',
+    templates: 'templates/precompiled/templates',
+    underscore: '../bower_components/underscore/underscore',
   },
 
   shim: {
@@ -30,6 +31,9 @@ require.config({
     },
     jquery: {
       exports: 'jQuery'
+    },
+    nprogress: {
+      exports: 'nprogress'
     },
     templates: {
       deps: ['handlebars']
