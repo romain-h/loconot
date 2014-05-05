@@ -1,37 +1,38 @@
 @mainPath: "/assets/stylesheets";
 @fontsPath: "@{mainPath}/fonts";
+@bootstrapPath: "../../../bower_components/bootstrap/less";
 
 // Core variables and mixins
-@import "bootstrap/variables.less";
-@import "bootstrap/mixins.less";
+@import "@{bootstrapPath}/variables.less";
+@import "@{bootstrapPath}/mixins.less";
 
 // Reset
-@import "bootstrap/normalize.less";
-@import "bootstrap/print.less";
+@import "@{bootstrapPath}/normalize.less";
+@import "@{bootstrapPath}/print.less";
 
 // Core CSS
-@import "bootstrap/scaffolding.less";
-@import "bootstrap/type.less";
-@import "bootstrap/code.less";
-@import "bootstrap/grid.less";
+@import "@{bootstrapPath}/scaffolding.less";
+@import "@{bootstrapPath}/type.less";
+@import "@{bootstrapPath}/code.less";
+@import "@{bootstrapPath}/grid.less";
 
-@import "bootstrap/tables.less";
-@import "bootstrap/forms.less";
-@import "bootstrap/buttons.less";
+@import "@{bootstrapPath}/tables.less";
+@import "@{bootstrapPath}/forms.less";
+@import "@{bootstrapPath}/buttons.less";
 @import "bootstrap/bootstrap-glyphicons.less";
 
 // Components: common
-@import "bootstrap/alerts.less";
-@import "bootstrap/list-group.less";
-@import "bootstrap/close.less";
-@import "bootstrap/modals.less";
+@import "@{bootstrapPath}/alerts.less";
+@import "@{bootstrapPath}/list-group.less";
+@import "@{bootstrapPath}/close.less";
+@import "@{bootstrapPath}/modals.less";
 
 // Custom part loconot
 @import "loconotApp/custom.less";
 
 // Utility classes
-@import "bootstrap/utilities.less"; // Has to be last to override when necessary
-@import "bootstrap/responsive-utilities.less";
+@import "@{bootstrapPath}/utilities.less"; // Has to be last to override when necessary
+@import "@{bootstrapPath}/responsive-utilities.less";
 
 @app-night-blue: #34495E;
 @app-flat-red: #E74C3C;
