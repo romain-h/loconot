@@ -7,6 +7,10 @@ define(function(require) {
   var LoconotsCol =  require('collections/loconots');
   var AppView = require('views/app');
 
+  // Bootstrap js
+  require('bootstrapDropdown');
+  require('bootstrapModal');
+
   // initialization function
   var init = function() {
     console.log('Init app');

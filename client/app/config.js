@@ -5,6 +5,8 @@ require.config({
 
   paths: {
     // Libraries
+    bootstrapDropdown: '../bower_components/bootstrap/js/dropdown',
+    bootstrapModal: '../bower_components/bootstrap/js/modal',
     jquery: '../bower_components/jquery/dist/jquery',
     underscore: '../bower_components/underscore/underscore',
     backbone: '../bower_components/backbone/backbone',
@@ -16,6 +18,12 @@ require.config({
     backbone: {
       deps: ['underscore', 'jquery'],
       exports: 'Backbone'
+    },
+    bootstrapDropdown: {
+      deps: ['jquery']
+    },
+    bootstrapModal: {
+      deps: ['jquery']
     },
     handlebars: {
       exports: 'Handlebars'
