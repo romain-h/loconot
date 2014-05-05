@@ -12,5 +12,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Romain Hardy <rom@hrdy.me>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.6.2",
+    "gulp-less": "^1.2.3",
+  }
 }
