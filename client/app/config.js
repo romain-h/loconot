@@ -5,9 +5,9 @@ require.config({
 
   paths: {
     // Libraries
-    jquery: '../vendor/js/jquery',
-    underscore: '../vendor/js/underscore',
-    backbone: '../vendor/js/backbone',
+    jquery: '../bower_components/jquery/dist/jquery',
+    underscore: '../bower_components/underscore/underscore',
+    backbone: '../bower_components/backbone/backbone',
     handlebars: '../vendor/js/handlebars.runtime',
     templates: '../js/build/templates'
   },

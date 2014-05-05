@@ -4,6 +4,10 @@
 .DS_Store
 .localized
 
+## Bower
+client/.bowerrc
+client/bower_components
+
 # Builds
 # client/js/build
 
