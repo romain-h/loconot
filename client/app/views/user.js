@@ -1,9 +1,8 @@
 define(function(require) {
-  require('templates');
   var Backbone = require('backbone');
   var $ = require('jquery');
   var app = require('app');
-  var Handlebars = require('handlebars');
+  var template = require('templates/user')
 
   // User View
   // ---------
@@ -11,7 +10,7 @@ define(function(require) {
     el: '#login',
 
     // Define current model template
-    template: Handlebars.templates.user,
+    template: template,
 
     initialize: function() {
       this.listenTo(this.model, 'change', this.render);

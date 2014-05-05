@@ -1,9 +1,8 @@
 define(function(require) {
-  require('templates');
   var Backbone = require('backbone');
   var $ = require('jquery');
   var app = require('app');
-  var Handlebars = require('handlebars');
+  var template = require('templates/addNewBox');
 
   // AaddNewBox Main View
   // --------------------
@@ -12,7 +11,7 @@ define(function(require) {
     className: 'addNewBox',
 
     // Define current model template
-    template: Handlebars.templates.addNewBox,
+    template: template,
 
     initialize: function(){
       this.$el.show();

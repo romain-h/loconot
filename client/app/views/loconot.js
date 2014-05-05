@@ -1,9 +1,8 @@
 define(function(require) {
-  require('templates');
   var Backbone = require('backbone');
   var $ = require('jquery');
   var app = require('app');
-  var Handlebars = require('handlebars');
+  var template = require('templates/item');
 
   // Loconot Item View
   // -----------------
@@ -13,7 +12,7 @@ define(function(require) {
     className: 'list-group-item',
 
     // Define current model template
-    template: Handlebars.templates.item,
+    template: template,
 
     // The DOM events specific to an item.
     events: {

@@ -1,5 +1,4 @@
 define(function(require) {
-  require('templates');
   var Backbone = require('backbone');
   var $ = require('jquery');
   var app = require('app');

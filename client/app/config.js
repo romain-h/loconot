@@ -11,7 +11,7 @@ require.config({
     underscore: '../bower_components/underscore/underscore',
     backbone: '../bower_components/backbone/backbone',
     handlebars: '../vendor/js/handlebars.runtime',
-    templates: '../js/build/templates'
+    templates: 'templates/precompiled/templates'
   },
 
   shim: {
