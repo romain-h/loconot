@@ -5,7 +5,6 @@
 .localized
 
 ## Bower
-client/.bowerrc
 client/bower_components
 
 # Builds
