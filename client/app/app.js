@@ -2,7 +2,7 @@ define(function(require) {
   'use strict';
 
   require('backbone');
-  var nprogress = require('nprogress');
+  var customLoader = require('helpers/progressbar');
 
   var app = {
     // The root path to run the application.
@@ -12,7 +12,7 @@ define(function(require) {
     collections: {},
     routers: {},
     keys: {},
-    loader: nprogress
+    loader: customLoader
   };
 
   return app;
