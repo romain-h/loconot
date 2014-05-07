@@ -3,6 +3,7 @@ define(function(require) {
 
   var app = require('app');
   var template = require('templates/addNewBox');
+  var resultsSearch = require('templates/resultsSearchAddress');
 
   // AaddNewBox Main View
   // --------------------
@@ -22,8 +23,10 @@ define(function(require) {
     // Render new box view
     render: function () {
       this.$el.html(this.template());
+
       // set other fields
       this.$otherFields = this.$('#otherFields');
+
       return this;
     },
 
@@ -41,58 +44,80 @@ define(function(require) {
     setCurrentViewAddress: function(_address){
       // Empty tmp results
       this.resList = null;
+
       // Empty and hide view list of results
       this.$('#search-res').html('').hide();
+
       this.currentAddress = _address;
+
       // Center map on selected address
       app.gmap.map.setCenter(_address.geometry.location);
+
       var marker = new google.maps.Marker({
           map: app.gmap.map,
           position: _address.geometry.location
       });
+
       // Replace input value
       this.$('#addressSearch').val(this.currentAddress.formatted_address);
+
       // Add success green class
       this.$('#fg-addressSearch').addClass('has-success');
+
       // Display other fields
       this.$otherFields.show();
     },
 
     // Search an address on enter with input value
     searchAddress: function( event ) {
-      if ( event.which !== app.keys.enter || !this.$('#addressSearch').val().trim() ) {
-        // DO BETTER EMPTY DETECTION...
+      var isSearchable = event.which !== app.keys.enter ||
+                         !this.$('#addressSearch').val().trim();
+
+      if (isSearchable) {
         this.$('#fg-addressSearch').removeClass('has-success');
         this.$otherFields.hide();
         return;
       }
-      console.log("Searching address ...");
+
       // Callback findAddress with context on geocoder search
-      app.gmap.search(this.$('#addressSearch').val().trim(), this.findAddress.bind(this));
+      var addressToFind = this.$('#addressSearch').val().trim();
+      app.gmap.search(addressToFind, this.findAddress.bind(this));
     },
 
     // Update current model with more informations
     updateModel: function(){
       var latlng = this.currentAddress.geometry.location;
-      var resAttrs = {
+      var title = this.$otherFields.find('#newTitle').val().trim();
+      var body = this.$otherFields.find('#newNote').val().trim();
+
+      var loconotAttrs = {
           address: this.currentAddress.formatted_address,
           lat: latlng.lat(),
           lng: latlng.lng(),
-          title: this.$otherFields.find('#newTitle').val().trim(),
-          body: this.$otherFields.find('#newNote').val().trim()
+          title: title,
+          body: body
       };
-      this.model.set(resAttrs, {validate:true});
+
+      // Store new model loconot
+      this.model.set(loconotAttrs, { validate:true });
       app.collections.loconots.create(this.model);
+
+      // Notify user
       app.views.main.trigger('displayMainStatus', 'alert-success', resAttrs.title + ' added as a new loconot.');
       app.views.main.trigger('removeAddbox');
     },
 
     // Geocoder search callback
     findAddress: function(results, status){
+      var that = this;
         if (status == google.maps.GeocoderStatus.OK) {
+
           // If more than one res, manual choosing place:
           if(results.length > 1){
-            this.$('#search-res').html(Handlebars.templates.resultsSearchAddress({res: results})).show();
+            this.$('#search-res').html(resultsSearch(
+                                        {res: results})
+                                  ).show();
+
             this.resList = results;
             return;
           }

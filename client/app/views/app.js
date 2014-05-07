@@ -29,7 +29,10 @@ define(function(require) {
       this.listenTo(this, 'isLoggedIn', this.loginCallback);
       this.listenTo(this, 'displayMainStatus', this.status);
       this.listenTo(this, 'removeAddbox', this.removeAddBox);
+
+      // Fetch collection on server
       app.collections.loconots.fetch();
+
       // Set map dom on load
       app.gmap = new CustomMapApi('map-canvas');
 
@@ -43,16 +46,18 @@ define(function(require) {
     // like error or info message.
     // Type: 'alert-info', 'alert-warning', 'alert-danger' are posssible value
     status: function(type, content){
-      this.$status.addClass(type);
+      this.$status.addClass(type)
       this.$status.find('.container').html(content);
       this.$status.fadeIn().delay(1200).fadeOut();
     },
 
     // Diplay box to add a new loconot
     displayAddNewBox: function(){
-      console.log("Display New AddBox");
       this.$addBtn.hide();
-      this.addView = new AddNewBoxView({ model: new app.models.loconot() });
+
+      var newModel = new app.models.loconot();
+      this.addView = new AddNewBoxView({ model: newModel });
+
       $('body').append(this.addView.render().el);
     },
 
@@ -63,25 +68,21 @@ define(function(require) {
     },
 
     // Add a new elt into main list of loconots
-    addOne: function( note ) {
+    addOne: function(note) {
       var view = new LoconotViewSingle({ model: note });
       $('#loconotsList').append( view.render().el );
-    },
-
-    // Add all items in the loconots collection at once.
-    addAll: function() {
-      app.collections.todos.each(this.addOne, this);
     },
 
     // Login popup
     login: function(){
       var options = 'location=0,status=0,width=800,height=400';
       var loginpopup  = window.open('/auth/login', 'Login Twitter', options);
+
       var callback = this.loginCallback.bind(this);
+
       var oauthInterval = window.setInterval(function(){
                   if (loginpopup.closed) {
                       window.clearInterval(oauthInterval);
-                      console.log("LOGGED IN");
                       callback();
                   }
         }, 1000);
@@ -90,6 +91,7 @@ define(function(require) {
     // Login Callback
     loginCallback: function(){
       var userView = new UserViewSingle({ model: app.models.user });
+
       // Refetch collection for connected user
       app.collections.loconots.fetch();
       this.$addBtn.show();

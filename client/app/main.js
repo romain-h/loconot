@@ -9,7 +9,6 @@ define(function(require) {
 
   // initialization function
   var init = function() {
-    console.log('Init app');
     // Set window context
     app.window = {};
     app.window.height = $(window).height();
@@ -17,25 +16,34 @@ define(function(require) {
 
     // Loconot collection singleton
     app.collections.loconots = new LoconotsCol();
-
     app.models.loconot = LoconotModel;
+
     // User singleton
     app.models.user = new UserModel();
+
     Backbone.history.start();
+
     // Main app view singleton
     app.views.main = new AppView();
+
     // Load user if connected
     app.loader.start();
     $.get('/api/me', function(){
       app.views.main.trigger('isLoggedIn');
+    })
+    .fail(function() {
+      console.log("User not logged in yet..");
+    })
+    .always(function() {
       app.loader.done();
     });
+
     // What is the enter key constant?
     app.keys = {
       enter: 13,
       suppr: 27
     };
-    console.log(app);
+
     return app;
   };
 

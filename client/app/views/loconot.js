@@ -3,12 +3,14 @@ define(function(require) {
 
   var app = require('app');
   var template = require('templates/item');
+  var markerTpl = require('templates/infoMarker');
 
   // Loconot Item View
   // -----------------
   return Backbone.View.extend({
 
     tagName: 'a',
+
     className: 'list-group-item',
 
     // Define current model template
@@ -22,7 +24,7 @@ define(function(require) {
       'keypress .edit': 'updateOnEnter',
       'blur .edit': 'close'
     },
-    // Init item view
+
     initialize: function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.destroy);
@@ -45,14 +47,21 @@ define(function(require) {
           map: app.gmap.map,
           position: this.position
       });
+
       // Add infos
-      // TODO: Use handlebars template for this
+      var contentMarker = {
+        title: this.model.get('title'),
+        note: this.model.get('body')
+      };
+
       this.markerInfoGM = new google.maps.InfoWindow({
-          content: "Title = "+this.model.get('title')+"<b>" + "<br />" + "Latitude: " +this.model.get('lat') + "<br />" + "Longitude: " + this.model.get('lng')+"</b><br/><a href='javascript:map.removeOverlay(lastMarker);'>remove</a>"
+        content: markerTpl(contentMarker)
       });
+
       // Edit new marker
       var win = this.markerInfoGM;
       var mark = this.markerGM;
+
       google.maps.event.addListener(this.markerGM, "click", function() {
         win.open(app.gmap.map, mark);
       });
@@ -65,7 +74,6 @@ define(function(require) {
 
     // Display more info on click
     moreInfo: function(){
-      console.log(this);
       this.$titlePreview.hide();
       this.$moreInfo.show();
       this.focuseMap();
@@ -73,7 +81,6 @@ define(function(require) {
 
     // Remove the item, destroy the model and delete its view.
     clear: function() {
-      console.log('Destroying model');
       // Remove marker
       this.markerGM.setMap(null);
       // Remove from server

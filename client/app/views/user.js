@@ -18,7 +18,9 @@ define(function(require) {
     },
 
     render: function() {
-      this.$el.html( this.template( this.model.toJSON() ) );
+      var tpl = this.template(this.model.toJSON());
+      this.$el.html(tpl);
+
       return this;
     }
   });

@@ -1,6 +1,8 @@
-<h3>Please choose the right place:</h3>
+<h3>You mean:</h3>
 <div class="list-group">
     {{#each res}}
-      <a href="#" class="list-group-item" data-nb="{{@index}}">{{ this.formatted_address }}</a>
+      <a href="#" class="list-group-item" data-nb="{{@index}}">
+        {{ this.formatted_address }}
+      </a>
     {{/each}}
 </div>
