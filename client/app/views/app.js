@@ -18,7 +18,7 @@ define(function(require) {
     events: {
       'click #addLoconotBtn': 'displayAddNewBox',
       'click #clear-completed': 'clearCompleted',
-      'click #toggle-all': 'toggleAllComplete',
+      'click #loconotsList .titlePreview': 'clickOnNote',
       'click #connect': 'login'
     },
 
@@ -71,6 +71,10 @@ define(function(require) {
     addOne: function(note) {
       var view = new LoconotViewSingle({ model: note });
       $('#loconotsList').append( view.render().el );
+    },
+
+    clickOnNote: function(evt) {
+      this.trigger('toggleFocusNote', evt);
     },
 
     // Login popup

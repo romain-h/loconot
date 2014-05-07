@@ -18,7 +18,6 @@ define(function(require) {
 
     // The DOM events specific to an item.
     events: {
-      'click': 'moreInfo',
       'dblclick label': 'edit',
       'click #destroyNote': 'clear',
       'keypress .edit': 'updateOnEnter',
@@ -28,8 +27,9 @@ define(function(require) {
     initialize: function() {
       this.listenTo(this.model, 'change', this.render);
       this.listenTo(this.model, 'destroy', this.destroy);
-      this.listenTo(this.model, 'visible', this.toggleVisible);
       this.position = new google.maps.LatLng(this.model.get('lat'), this.model.get('lng'));
+      this.listenTo(app.views.main, 'toggleFocusNote', this.toggleView);
+      this.isFocused = false;
     },
 
     // Render item and also gmap marker
@@ -73,10 +73,19 @@ define(function(require) {
     },
 
     // Display more info on click
-    moreInfo: function(){
-      this.$titlePreview.hide();
-      this.$moreInfo.show();
-      this.focuseMap();
+    // and hide opened notes
+    toggleView: function(ev){
+      var clickedId = $(ev.target).data('id');
+      var isToToggle = ((this.model.get('id') !== clickedId) && this.isFocused) ||
+                        (this.model.get('id') === clickedId && !this.isFocused);
+      if (isToToggle) {
+        this.isFocused = !this.isFocused;
+        this.$titlePreview.toggle();
+        this.$moreInfo.toggle();
+        if (this.isFocused) {
+          this.focuseMap();
+        }
+      }
     },
 
     // Remove the item, destroy the model and delete its view.
