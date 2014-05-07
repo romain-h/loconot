@@ -2,6 +2,7 @@ define(function(require) {
   'use strict';
 
   var app = require('app');
+  var CustomMapApi = require('helpers/googlemaps');
   var LoconotViewSingle = require('views/loconot');
   var UserViewSingle = require('views/user');
   var AddNewBoxView = require('views/addNewBox');
@@ -30,7 +31,7 @@ define(function(require) {
       this.listenTo(this, 'removeAddbox', this.removeAddBox);
       app.collections.loconots.fetch();
       // Set map dom on load
-      app.gmap = new app.GmapApi('map-canvas');
+      app.gmap = new CustomMapApi('map-canvas');
 
       this.$addBtn = this.$('#addLoconotBtn');
       this.$status = this.$('#statusBox');
