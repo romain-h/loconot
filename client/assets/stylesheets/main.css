@@ -3320,9 +3320,9 @@ button.close {
 .mainAppView .mainContainer .loconotsList .moreInfo .content-actions {
   cursor: pointer;
   font-size: 10px;
-  float: left;
+  float: right;
   text-align: right;
-  width: 280px;
+  width: 66px;
 }
 .mainAppView .mainContainer .loconotsList .moreInfo .content-actions .action-edit {
   text-decoration: line-through;
@@ -3352,6 +3352,9 @@ button.close {
 .addNewBox .mainContainer .otherFields .btn-validation {
   float: right;
   margin: 10px;
+}
+.list-group-item {
+  padding: 6px 10px;
 }
 .clearfix:before,
 .clearfix:after,
