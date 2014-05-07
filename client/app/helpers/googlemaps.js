@@ -27,7 +27,7 @@ define(function(require) {
       styles: styles
     };
 
-    this.map = new google.maps.Map(document.getElementById('map-canvas'), this.mapOptions);
+    this.map = new google.maps.Map(document.getElementById(domId), this.mapOptions);
 
     // Init Geocoder object
     this.geocoder = new google.maps.Geocoder();
