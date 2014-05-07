@@ -103,7 +103,7 @@ define(function(require) {
       app.collections.loconots.create(this.model);
 
       // Notify user
-      app.views.main.trigger('displayMainStatus', 'alert-success', resAttrs.title + ' added as a new loconot.');
+      app.views.main.trigger('displayMainStatus', 'alert-success', loconotAtts.title + ' added as a new loconot.');
       app.views.main.trigger('removeAddbox');
     },
 
