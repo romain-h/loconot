@@ -114,9 +114,11 @@ define(function(require) {
 
           // If more than one res, manual choosing place:
           if(results.length > 1){
-            this.$('#search-res').html(resultsSearch(
-                                        {res: results})
-                                  ).show();
+            // Fix max size to avoid overflow
+            var _height = app.window.height - 155;
+            this.$('#search-res').css({ height:  _height})
+                                 .html(resultsSearch({res: results}))
+                                 .show();
 
             this.resList = results;
             return;

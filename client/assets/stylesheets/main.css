@@ -3353,6 +3353,9 @@ button.close {
   float: right;
   margin: 10px;
 }
+.addNewBox .mainContainer .search-res {
+  overflow-y: scroll;
+}
 .list-group-item {
   padding: 6px 10px;
 }
