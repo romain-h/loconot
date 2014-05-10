@@ -1,10 +1,10 @@
 # Loconot
 
-Available on http://loconot.herokuapp.com
+> Available on http://loconot.herokuapp.com
 
 Have you ever used the stars option on Google Maps? This awesome feature is provided by Google directly into Maps and let users put some stars on their favorites places over the world. Unfortunately it's currently impossible to customize this marker, by adding comments or notes. Then I decided to implement this feature by playing around with Backbone.js.
 
-[img]
+![Loconot web app](screenshot.png?raw=true)
 
 ## Description
 
@@ -12,13 +12,64 @@ The main goal of this project is to get an insight regarding attractives technol
 
 ### Design
  - **Backend/Server**: Restfull API - Ruby - Sinatra Framework
- - **Frontend/Client**: Stateless Client - JavaScript - Backbone.js Framework
+ - **Frontend/Client**: Client - JavaScript - Backbone.js Framework
  - **Database**: MongoDB
 
 ### Tools
-GoogleMapsApi (v3), TwitterApi, Require.js, Underscore.js, jQuery, Handlebars, Less.
+GoogleMapsApi (v3), TwitterApi, Gulp Require.js, Underscore.js, jQuery, Handlebars, Less.
 
-## Extensions / ToDo
+## Requirements
 
-- Phonegapp portage.
++ Ruby >1.9 
++ MongoDb
++ Nodejs 0.10.x
+
+## Installation
+
+Installation on MacOsX 
+
+#### Nodejs
+Use brew:
+
+```
+$ brew install node
+```
+
+#### Bower
+```
+$ sudo npm install -g bower
+```
+
+[Install MongoDb](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/) and run MongoDb.
+
+#### Clone project
+
+To install the backend
+```
+$ cd loconot
+$ bundle 
+```
+
+Then to install the client use these commands:
+```
+$ cd loconot/client
+$ npm install 
+$ bower install
+```
+
+## Running the project
+
+### Backend Server
+Be sure that MongoDb is running first, then run the Sinatra application:
+
+```
+$ rackup config.ru
+```
+
+### Client
+```
+$ cd loconot/client
+$ gulp
+```
+
 
