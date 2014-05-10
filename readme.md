@@ -24,6 +24,8 @@ GoogleMapsApi (v3), TwitterApi, Gulp Require.js, Underscore.js, jQuery, Handleba
 + MongoDb
 + Nodejs 0.10.x
 
+This app requiere a Twitter application to login. You need to create an app on [https://dev.twitter.com/](https://dev.twitter.com/). If you want to get a temporary one drop me a line.
+
 ## Installation
 
 Installation on MacOsX 
@@ -41,6 +43,15 @@ $ sudo npm install -g bower
 ```
 
 [Install MongoDb](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/) and run MongoDb.
+
+#### Twitter App credential
+Add credentials into your environment
+
+```
+#LOCONOT APPLICATION HEROKU ENV
+export LOCONOT_TWITTER_CONSUMER_KEY='YOUR_KEY'
+export LOCONOT_TWITTER_CONSUMER_SECRET='YOUR_SECRET'
+```
 
 #### Clone project
 
