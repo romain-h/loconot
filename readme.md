@@ -44,7 +44,7 @@ $ sudo npm install -g bower
 
 [Install MongoDb](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/) and run MongoDb.
 
-#### Twitter App credential
+#### Twitter App credentials
 Add credentials into your environment
 
 ```
