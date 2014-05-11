@@ -31,8 +31,13 @@ First, clone this project.
 
 Installation on MacOsX 
 
+#### Ruby bundler
+```
+$ sudo gem install bundler
+```
+
 #### Nodejs
-Use brew:
+Using brew:
 
 ```
 $ brew install node
@@ -84,4 +89,5 @@ $ cd loconot/client
 $ gulp
 ```
 
+Go to [http://localhost:9292] and enjoy!
 
