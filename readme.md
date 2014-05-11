@@ -27,6 +27,7 @@ GoogleMapsApi (v3), TwitterApi, Gulp Require.js, Underscore.js, jQuery, Handleba
 This app requiere a Twitter application to login. You need to create an app on [https://dev.twitter.com/](https://dev.twitter.com/). If you want to get a temporary one drop me a line.
 
 ## Installation
+First, clone this project.
 
 Installation on MacOsX 
 
