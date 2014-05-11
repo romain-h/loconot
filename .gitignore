@@ -13,7 +13,7 @@ client/node_modules
 
 # Builds
 # client/js/build
-clients/assets/stylesheets/main.css
+client/assets/stylesheets/main.css
 
 ## Handlebars precompiled
 client/app/templates/precompiled
