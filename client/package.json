@@ -15,6 +15,7 @@
   "author": "Romain Hardy <rom@hrdy.me>",
   "license": "MIT",
   "devDependencies": {
+    "bower": "^1.3.3",
     "gulp": "^3.6.2",
     "gulp-define-module": "^0.1.1",
     "gulp-handlebars": "^2.1.0",

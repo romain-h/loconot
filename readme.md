@@ -43,11 +43,6 @@ Using brew:
 $ brew install node
 ```
 
-#### Bower
-```
-$ sudo npm install -g bower
-```
-
 [Install MongoDb](http://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/) and run MongoDb.
 
 #### Twitter App credentials
@@ -71,7 +66,6 @@ Then to install the client use these commands:
 ```
 $ cd loconot/client
 $ npm install 
-$ bower install
 ```
 
 ## Running the project
