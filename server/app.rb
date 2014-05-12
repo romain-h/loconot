@@ -93,7 +93,9 @@ class LoconotApp < Sinatra::Base
         note = Loconot.find_by_id(params[:id])
         haltCustom(404, 'The ressource has not been found') if note.nil?
         # Add test on current user_id
-        haltCustom(403, 'Ressource access forbidden') if note.user_id != session[:user_id]
+        unless note.user_id == session[:user_id]
+          haltCustom(403, 'Ressource access forbidden')
+        end
         return note.to_json
     end
 
@@ -110,22 +112,23 @@ class LoconotApp < Sinatra::Base
     end
 
     # PUT Modify an existing loconot ressource
-    put '/api/loconots/:id' do
-        tryAccessToken
-        note = Loconot.find_by_id(params[:id])
-        # TODO add a condition on data?!!
-        data = JSON.parse(request.body.read)
-        status 200
-    end
+    #put '/api/loconots/:id' do
+        #tryAccessToken
+        #note = Loconot.find_by_id(params[:id])
+        ## TODO add a condition on data?!!
+        #status 200
+    #end
 
     # DELETE an existing loconot ressource
     delete '/api/loconots/:id' do
         tryAccessToken
         begin
-           Loconot.destroy(params[:id])
-        # Catch MongoMapper Exception on not found
-        rescue MongoMapper::DocumentNotFound
-            haltCustom(404, 'The ressource has not been found')
+          note = Loconot.all(:id => params[:id], :user_id => session[:user_id])
+          raise 'The ressource has not been found' if note.blank?
+          note[0].destroy
+        # Catch Exception on not found
+        rescue Exception => e
+            haltCustom(404, e.message)
         end
         status 204
     end
@@ -182,9 +185,12 @@ class LoconotApp < Sinatra::Base
           # puts @memc.get(params[:oauth_token])
 
         if @client.authorized?
-            # Storing the access tokens so we don't have to go back to Twitter again
+            # Storing the access tokens so we don't have to go back to Twitter
+            # again
             session[:access_token] = @access_token.token
             session[:secret_token] = @access_token.secret
+            # TODO Add a test condition on Twitter id to retrieve user with new
+            # token
             current_user = User.find_by_access_token(@access_token.token)
             if !current_user
                 @user_info = @client.info
@@ -196,7 +202,7 @@ class LoconotApp < Sinatra::Base
                                             })
                 current_user.save!
             end
-            session[:user_id] = current_user.id
+            session[:user_id] = current_user.id.to_s
 
             # Return script to close login popup
             content_type 'text/html'

@@ -83,5 +83,5 @@ $ cd loconot/client
 $ gulp
 ```
 
-Go to [http://localhost:9292] and enjoy!
+Go to [http://localhost:9292](http://localhost:9292) and enjoy!
 
