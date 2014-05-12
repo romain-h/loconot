@@ -46,9 +46,13 @@ define(function(require) {
     // like error or info message.
     // Type: 'alert-info', 'alert-warning', 'alert-danger' are posssible value
     status: function(type, content){
-      this.$status.addClass(type)
+      this.$status.addClass(type);
       this.$status.find('.container').html(content);
-      this.$status.fadeIn().delay(1200).fadeOut();
+      this.$status.fadeIn()
+                  .delay(1200)
+                  .fadeOut('slow', function(){
+                    $(this).removeClass(type);
+                  });
     },
 
     // Diplay box to add a new loconot

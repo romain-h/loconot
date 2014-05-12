@@ -100,11 +100,15 @@ define(function(require) {
 
       // Store new model loconot
       this.model.set(loconotAttrs, { validate:true });
-      app.collections.loconots.create(this.model);
 
       // Notify user
-      app.views.main.trigger('displayMainStatus', 'alert-success', loconotAttrs.title + ' added as a new loconot.');
-      app.views.main.trigger('removeAddbox');
+      if (this.model.isValid()) {
+        app.collections.loconots.create(this.model);
+        app.views.main.trigger('displayMainStatus', 'alert-success', loconotAttrs.title + ' added as a new loconot.');
+        app.views.main.trigger('removeAddbox');
+      } else {
+        app.views.main.trigger('displayMainStatus', 'alert-danger', this.model.validationError);
+      }
     },
 
     // Geocoder search callback

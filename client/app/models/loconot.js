@@ -12,7 +12,7 @@ define(function(require) {
     },
 
     validate: function(attrs, options) {
-      if (attrs.title === undefined) {
+      if (attrs.title === undefined || attrs.title === '') {
         return "Title need to be set";
       }
     }
