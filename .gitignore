@@ -12,7 +12,8 @@ npm-debug.log
 client/node_modules
 
 # Builds
-# client/js/build
+client/build
+client/dist
 client/assets/stylesheets/main.css
 
 ## Handlebars precompiled
