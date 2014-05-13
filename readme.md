@@ -85,3 +85,13 @@ $ gulp
 
 Go to [http://localhost:9292](http://localhost:9292) and enjoy!
 
+
+## Deployment
+To generate a unique JS file client application you can run the build task
+
+```
+$ cd client
+$ gulp build
+```
+
+Then, you can deploy the `dist/main.js` generated.
